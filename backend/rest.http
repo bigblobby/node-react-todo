@@ -12,7 +12,7 @@ GET http://{{host}}/api/todo
 
 ###
 
-GET http://{{host}}/api/todo?page=2
+GET http://{{host}}/api/todo?page=1
 
 ###
 
@@ -24,7 +24,7 @@ DELETE http://{{host}}/api/todo/6
 
 ###
 
-PUT http://{{host}}/api/todo/17
+PUT http://{{host}}/api/todo/8
 Content-Type: application/json
 
 [

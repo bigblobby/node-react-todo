@@ -5,7 +5,7 @@ async function getAll(req, res){
     let options = {};
 
     if(req.query.page){
-        var limit = 10;
+        var limit = Number(req.query.limit) || 10;
         var offset = (req.query.page - 1) * limit;
 
         options = {offset: offset, limit: limit};

@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import {NavLink, Link} from "react-router-dom";
 import axios from "axios";
+import queryString from 'query-string';
 import { range } from "./helpers";
 
 export default class Pagination extends React.Component {
@@ -45,7 +46,14 @@ export default class Pagination extends React.Component {
             })
     }
     changePage(page){
-        return this.props.url + '?page=' + page;
+        const url = this.props.url.split('?')[0];
+        const qs = this.props.url.split('?')[1];
+        const parsedString = queryString.parse(qs);
+        parsedString.page = page;
+
+        const newqs = queryString.stringify(parsedString);
+
+        return url + '?' + newqs;
     }
 
     renderPaginationNumbers(){
@@ -85,7 +93,7 @@ export default class Pagination extends React.Component {
                         ) : null
                     }
                     {
-                        this.state.page && this.renderPaginationNumbers()
+                        this.state.page && this.props.showPageNumbers && this.renderPaginationNumbers()
                     }
                     {
                         this.state.page < this.state.totalPages ? (

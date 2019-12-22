@@ -20,6 +20,10 @@ GET http://{{host}}/api/todo?page=1&limit=20
 
 ###
 
+GET http://{{host}}/api/todo?page=1&limit=20&order=old
+
+###
+
 GET http://{{host}}/api/todo/6
 
 ###

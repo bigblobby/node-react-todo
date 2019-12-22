@@ -1,4 +1,5 @@
 const Todo = require('./todo.model');
+const helper = require('./helper');
 const Op = require('sequelize').Op;
 
 async function getAll(req, res){
@@ -8,7 +9,9 @@ async function getAll(req, res){
         var limit = Number(req.query.limit) || 10;
         var offset = (req.query.page - 1) * limit;
 
-        options = {offset: offset, limit: limit};
+        const order = helper.getOrder(req.query.order);
+
+        options = {offset: offset, limit: limit, order: order};
     }
 
     Todo.findAndCountAll(options)
@@ -20,6 +23,7 @@ async function getAll(req, res){
             }
 
             if(req.query.page) {
+                // TODO: Limit and totalOnPage are not used, may want to remove them
                 res.status(200).json({
                     total: result.count,
                     totalOnPage: result.rows.length,

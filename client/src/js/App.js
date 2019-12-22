@@ -10,10 +10,12 @@ export default class App extends React.Component{
 
         this.state = {
             page: queryString.parse(this.props.location.search).page || 1,
-            limit: queryString.parse(this.props.location.search).limit || 10
+            limit: queryString.parse(this.props.location.search).limit || 10,
+            order: queryString.parse(this.props.location.search).order || 'new',
         };
 
         this.changeAmount = this.changeAmount.bind(this);
+        this.sort = this.sort.bind(this);
     }
 
     componentDidUpdate(prevProps, prevState){
@@ -28,19 +30,34 @@ export default class App extends React.Component{
         this.setState({limit: e.target.value});
     }
 
+    sort(e){
+        this.setState({order: e.target.value})
+    }
+
     render(){
         if(this.state.page){
             let qs = queryString.stringify({
                 page: this.state.page,
-                limit: this.state.limit
+                limit: this.state.limit,
+                order: this.state.order
             });
 
             return (
                 <div className="App">
-                    <select value={this.state.limit} onChange={this.changeAmount}>
+                    <label htmlFor="per-page-dropdown">Per Page:</label>
+                    <select id="per-page-dropdown" value={this.state.limit} onChange={this.changeAmount}>
                         <option value="10">10</option>
                         <option value="20">20</option>
                         <option value="50">50</option>
+                    </select>
+                    <label htmlFor="order-dropdown">Sort by:</label>
+                    <select id="order-dropdown" value={this.state.order} onChange={this.sort}>
+                        <option value="ph">Priority High</option>
+                        <option value="pl">Priority Low</option>
+                        <option value="a-z">A-Z</option>
+                        <option value="z-a">Z-A</option>
+                        <option value="new">Newest</option>
+                        <option value="old">Oldest</option>
                     </select>
                     <Pagination
                         apiUrl={'/api/todo?' + qs}

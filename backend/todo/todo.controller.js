@@ -65,9 +65,13 @@ function createOne(req, res){
     Todo.sync().then(() => {
         Todo.create({
             title: req.body.title,
-            priority: req.body.priority
+            priority: req.body.priority,
+            completed: req.body.completed
         }).then(item => {
-            res.status(201).json(item);
+            res.status(201).json({
+                item: item,
+                message: 'Todo created successfully'
+            });
         }).catch((err) => {
             console.error(err);
             res.status(500).json({message: err})

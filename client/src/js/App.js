@@ -44,6 +44,7 @@ export default class App extends React.Component{
 
             return (
                 <div className="App">
+                    <Link to={'/todo/create'}>Create todo</Link>
                     <label htmlFor="per-page-dropdown">Per Page:</label>
                     <select id="per-page-dropdown" value={this.state.limit} onChange={this.changeAmount}>
                         <option value="10">10</option>

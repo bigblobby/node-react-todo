@@ -12,6 +12,11 @@ const Todo = db.define('todo', {
         validate: {
             isNumeric: true
         }
+    },
+    completed: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
     }
 }, {
     modelName: 'todo',

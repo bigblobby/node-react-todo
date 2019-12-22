@@ -20,7 +20,7 @@ GET http://{{host}}/api/todo?page=1&limit=20
 
 ###
 
-GET http://{{host}}/api/todo?page=1&limit=20&order=old
+GET http://{{host}}/api/todo?page=1&limit=20&order=a-z
 
 ###
 
@@ -36,7 +36,8 @@ PUT http://{{host}}/api/todo/8
 Content-Type: application/json
 
 [
-    {"property": "title", "value": "another item"}
+    {"property": "title", "value": "another item"},
+    {"property": "completed", "value": true}
 ]
 
 ###

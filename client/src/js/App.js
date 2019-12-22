@@ -18,7 +18,7 @@ export default class App extends React.Component{
         this.sort = this.sort.bind(this);
     }
 
-    componentDidUpdate(prevProps, prevState){
+    componentDidUpdate(prevProps, prevState, snapshot){
         let pageNo = queryString.parse(this.props.location.search).page || 1;
 
         if(prevState.page !== pageNo){
@@ -70,7 +70,7 @@ export default class App extends React.Component{
                             return todos.length > 0 && todos.map((todo, i) => {
                                 return (
                                     <div key={i}>
-                                        {todo.id}: {todo.title} - {todo.priority}
+                                        {todo.id}: {todo.title} - {todo.priority} - {todo.completed ? 'Complete' : 'Incomplete'}
                                         <Link to={'/todo/' + todo.id}>Edit</Link>
                                     </div>
                                 );

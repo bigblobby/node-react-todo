@@ -45,7 +45,7 @@ export default class Pagination extends React.Component {
             })
     }
     changePage(page){
-        return this.props.url + 'page=' + page;
+        return this.props.url + '?page=' + page;
     }
 
     renderPaginationNumbers(){
@@ -63,7 +63,7 @@ export default class Pagination extends React.Component {
         let last = getLastPage(this.state.totalPages, this.state.page);
 
         return range(first, last).map(page => {
-            return <Link className={"page-num " + (this.props.activePage == page ? 'active' : '')} key={page} to={() => this.changePage(page)}>{page}</Link>
+            return <Link className={"page-num " + (this.state.page == page ? 'active' : '')} key={page} to={() => this.changePage(page)}>{page}</Link>
         });
     }
 

@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import {NavLink, Link} from "react-router-dom";
 import axios from "axios";
+import { range } from "./helpers";
 
 export default class Pagination extends React.Component {
     constructor(props) {
@@ -47,32 +48,23 @@ export default class Pagination extends React.Component {
         return this.props.url + page;
     }
 
-    renderPaginationNumbers(current){
-        if(current === 1){
-            return (
-                <Fragment>
-                    <NavLink to={() => this.changePage(current)}>{current}</NavLink>
-                    <NavLink to={() => this.changePage(current + 1)}>{current + 1}</NavLink>
-                    <NavLink to={() => this.changePage(current + 2)}>{current + 2}</NavLink>
-                </Fragment>
-            )
-        } else if(current === this.state.totalPages){
-            return (
-                <Fragment>
-                    <NavLink to={() => this.changePage(current - 2)}>{current - 2}</NavLink>
-                    <NavLink to={() => this.changePage(current - 1)}>{current - 1}</NavLink>
-                    <NavLink to={() => this.changePage(current)}>{current}</NavLink>
-                </Fragment>
-            )
-        } else {
-            return (
-                <Fragment>
-                    <NavLink to={() => this.changePage(current - 1)}>{current - 1}</NavLink>
-                    <NavLink to={() => this.changePage(current)}>{current}</NavLink>
-                    <NavLink to={() => this.changePage(current + 1)}>{current + 1}</NavLink>
-                </Fragment>
-            )
+    renderPaginationNumbers(){
+        function getFirstPage(totalPages, page){
+            const offset = page === totalPages ? 2 : 1;
+            return Math.max(1, page - offset)
         }
+
+        function getLastPage(totalPages, page){
+            const offset = page === 1 ? 2 : 1;
+            return Math.min(totalPages, page + offset);
+        }
+
+        let first = getFirstPage(this.state.totalPages, this.state.page);
+        let last = getLastPage(this.state.totalPages, this.state.page);
+
+        return range(first, last).map(page => {
+            return <NavLink key={page} to={() => this.changePage(page)}>{page}</NavLink>
+        });
     }
 
     render(){
@@ -88,7 +80,7 @@ export default class Pagination extends React.Component {
                         ) : null
                     }
                     {
-                        this.state.page && this.renderPaginationNumbers(this.state.page)
+                        this.state.page && this.renderPaginationNumbers()
                     }
                     {
                         this.state.page < this.state.totalPages ? (

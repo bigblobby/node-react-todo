@@ -1,6 +1,4 @@
-import React, {Fragment} from 'react';
-import {NavLink, Link} from "react-router-dom";
-import axios from 'axios';
+import React from 'react';
 import Pagination from "./Pagination";
 
 export default class App extends React.Component{

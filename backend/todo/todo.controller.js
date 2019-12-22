@@ -13,16 +13,20 @@ async function getAll(req, res){
 
     Todo.findAndCountAll(options)
         .then(result => {
-            //console.log("All todos:", JSON.stringify(items, null, 4));
+            const totalPages = Math.ceil(result.count / limit);
+
+            if(req.query.page > totalPages){
+                return res.status(404).json({message: 'Page not found'});
+            }
+
             if(req.query.page) {
                 res.status(200).json({
                     total: result.count,
                     totalOnPage: result.rows.length,
                     limit: limit,
                     page: Number(req.query.page),
-                    totalPages: Math.ceil(result.count / limit),
+                    totalPages: totalPages,
                     items: result.rows
-
                 });
             } else {
                 res.status(200).json({

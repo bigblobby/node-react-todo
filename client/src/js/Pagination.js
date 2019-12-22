@@ -45,7 +45,7 @@ export default class Pagination extends React.Component {
             })
     }
     changePage(page){
-        return this.props.url + page;
+        return this.props.url + 'page=' + page;
     }
 
     renderPaginationNumbers(){
@@ -63,7 +63,7 @@ export default class Pagination extends React.Component {
         let last = getLastPage(this.state.totalPages, this.state.page);
 
         return range(first, last).map(page => {
-            return <NavLink key={page} to={() => this.changePage(page)}>{page}</NavLink>
+            return <Link className={"page-num " + (this.props.activePage == page ? 'active' : '')} key={page} to={() => this.changePage(page)}>{page}</Link>
         });
     }
 
@@ -75,8 +75,13 @@ export default class Pagination extends React.Component {
                 </div>
                 <div className="pagination">
                     {
+                        this.state.page && this.state.page > 1 && this.props.showFirst ? (
+                            <Link className="page-first" to={() => this.changePage(1)}>First</Link>
+                        ) : null
+                    }
+                    {
                         this.state.page > 1 ? (
-                            <Link to={() => this.changePage(this.state.page - 1)}>Prev</Link>
+                            <Link className="page-prev" to={() => this.changePage(this.state.page - 1)}>Prev</Link>
                         ) : null
                     }
                     {
@@ -84,7 +89,12 @@ export default class Pagination extends React.Component {
                     }
                     {
                         this.state.page < this.state.totalPages ? (
-                            <Link to={() => this.changePage(this.state.page + 1)}>Next</Link>
+                            <Link className="page-next" to={() => this.changePage(this.state.page + 1)}>Next</Link>
+                        ) : null
+                    }
+                    {
+                        this.state.page && this.state.page < this.state.totalPages && this.props.showLast ? (
+                            <Link className="page-last" to={() => this.changePage(this.state.totalPages)}>Last</Link>
                         ) : null
                     }
                 </div>

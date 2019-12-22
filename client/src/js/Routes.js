@@ -8,7 +8,7 @@ export default class Routes extends React.Component {
             <BrowserRouter>
                 <div id="content">
                     <Switch>
-                        <Route path="/todo/:page" component={App}/>
+                        <Route path="/todo" component={App}/>
                     </Switch>
                 </div>
             </BrowserRouter>

@@ -5,6 +5,10 @@ import queryString from 'query-string';
 import { range } from "./helpers";
 
 export default class Pagination extends React.Component {
+    static defaultProps = {
+        pageOffset: 1
+    };
+
     constructor(props) {
         super(props);
 
@@ -45,6 +49,7 @@ export default class Pagination extends React.Component {
                 })
             })
     }
+
     changePage(page){
         const url = this.props.url.split('?')[0];
         const qs = this.props.url.split('?')[1];
@@ -58,17 +63,17 @@ export default class Pagination extends React.Component {
 
     renderPaginationNumbers(){
         function getFirstPage(totalPages, page){
-            const offset = page === totalPages ? 2 : 1;
+            const offset = page === totalPages ? this.props.pageOffset + 1 : this.props.pageOffset;
             return Math.max(1, page - offset)
         }
 
         function getLastPage(totalPages, page){
-            const offset = page === 1 ? 2 : 1;
+            const offset = page === 1 ? this.props.pageOffset + 1 : this.props.pageOffset;
             return Math.min(totalPages, page + offset);
         }
 
-        let first = getFirstPage(this.state.totalPages, this.state.page);
-        let last = getLastPage(this.state.totalPages, this.state.page);
+        let first = getFirstPage.call(this, this.state.totalPages, this.state.page);
+        let last = getLastPage.call(this, this.state.totalPages, this.state.page);
 
         return range(first, last).map(page => {
             return <Link className={"page-num " + (this.state.page == page ? 'active' : '')} key={page} to={() => this.changePage(page)}>{page}</Link>

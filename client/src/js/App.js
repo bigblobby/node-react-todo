@@ -14,8 +14,7 @@ export default class App extends React.Component{
             order: queryString.parse(this.props.location.search).order || 'new',
         };
 
-        this.changeAmount = this.changeAmount.bind(this);
-        this.sort = this.sort.bind(this);
+        this.handleSelect = this.handleSelect.bind(this);
     }
 
     componentDidUpdate(prevProps, prevState, snapshot){
@@ -26,12 +25,10 @@ export default class App extends React.Component{
         }
     }
 
-    changeAmount(e){
-        this.setState({limit: e.target.value});
-    }
-
-    sort(e){
-        this.setState({order: e.target.value})
+    handleSelect(e, stateName){
+        this.setState({
+            [stateName]: e.target.value
+        })
     }
 
     render(){
@@ -44,15 +41,17 @@ export default class App extends React.Component{
 
             return (
                 <div className="App">
-                    <Link to={'/todo/create'}>Create todo</Link>
+                    <div>
+                        <Link to={'/todo/create'}>Create todo</Link>
+                    </div>
                     <label htmlFor="per-page-dropdown">Per Page:</label>
-                    <select id="per-page-dropdown" value={this.state.limit} onChange={this.changeAmount}>
+                    <select id="per-page-dropdown" value={this.state.limit} onChange={(e) => this.handleSelect(e, 'limit')}>
                         <option value="10">10</option>
                         <option value="20">20</option>
                         <option value="50">50</option>
                     </select>
                     <label htmlFor="order-dropdown">Sort by:</label>
-                    <select id="order-dropdown" value={this.state.order} onChange={this.sort}>
+                    <select id="order-dropdown" value={this.state.order} onChange={(e) => this.handleSelect(e, 'order')}>
                         <option value="ph">Priority High</option>
                         <option value="pl">Priority Low</option>
                         <option value="a-z">A-Z</option>
@@ -63,6 +62,7 @@ export default class App extends React.Component{
                     <Pagination
                         apiUrl={'/api/todo?' + qs}
                         url={'/todo?' + qs}
+                        pageOffset={1}
                         showFirst
                         showLast
                         showPageNumbers

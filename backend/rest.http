@@ -1,0 +1,35 @@
+POST http://{{host}}/api/todo
+Content-Type: application/json
+
+{
+    "title": "item",
+    "priority": "6"
+}
+
+###
+
+GET http://{{host}}/api/todo
+
+###
+
+GET http://{{host}}/api/todo?page=2
+
+###
+
+GET http://{{host}}/api/todo/6
+
+###
+
+DELETE http://{{host}}/api/todo/6
+
+###
+
+PUT http://{{host}}/api/todo/17
+Content-Type: application/json
+
+[
+    {"property": "title", "value": "another item"}
+]
+
+###
+

@@ -25,55 +25,7 @@ export default class Pagination extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            items: [],
-            limit: null,
-            page: null,
-            total: null,
-            totalOnPage: null,
-            totalPages: null
-        };
-
-        this.getItems = this.getItems.bind(this);
-        this.changePage = this.changePage.bind(this);
         this.renderPaginationNumbers = this.renderPaginationNumbers.bind(this);
-    }
-
-    componentDidMount(){
-        this.getItems();
-    }
-
-    componentDidUpdate(prevProps) {
-        if(prevProps.apiUrl !== this.props.apiUrl){
-            this.getItems();
-        }
-    }
-
-    getItems(){
-        getDataAtUrl(this.props.apiUrl, this.props.cacheResults)
-            .then(result => {
-                this.setState({
-                    items: result.data.items,
-                    limit: result.data.limit,
-                    page: result.data.page,
-                    total: result.data.total,
-                    totalOnPage: result.data.totalOnPage,
-                    totalPages: result.data.totalPages
-                })
-            })
-    }
-
-    changePage(page){
-        const stripedUrl = this.props.apiUrl.slice(4);
-
-        const url = stripedUrl.split('?')[0];
-        const qs = stripedUrl.split('?')[1];
-        const parsedString = queryString.parse(qs);
-        parsedString.page = page;
-
-        const newqs = queryString.stringify(parsedString);
-
-        return url + '?' + newqs;
     }
 
     renderPaginationNumbers(){
@@ -87,46 +39,42 @@ export default class Pagination extends React.Component {
             return Math.min(totalPages, page + offset);
         }
 
-        let first = getFirstPage.call(this, this.state.totalPages, this.state.page);
-        let last = getLastPage.call(this, this.state.totalPages, this.state.page);
+        let first = getFirstPage.call(this, this.props.totalPages, this.props.page);
+        let last = getLastPage.call(this, this.props.totalPages, this.props.page);
 
         return range(first, last).map(page => {
-            return <Link className={"page-num " + (this.state.page == page ? 'active' : '')} key={page} to={() => this.changePage(page)}>{page}</Link>
+            console.log(page);
+            return <Link className={"page-num " + (this.props.page == page ? 'active' : '')} key={page} onClick={() => this.props.changePage(page)} to={() => this.props.setPage(page)}>{page}</Link>
         });
     }
 
     render(){
         return (
-            <Fragment>
-                <div className="items">
-                    {this.props.children(this.state.items)}
-                </div>
-                <div className="pagination">
-                    {
-                        this.state.page && this.state.page > 1 && this.props.showFirst ? (
-                            <Link className="page-first" to={() => this.changePage(1)}>First</Link>
-                        ) : null
-                    }
-                    {
-                        this.state.page > 1 ? (
-                            <Link className="page-prev" to={() => this.changePage(this.state.page - 1)}>Prev</Link>
-                        ) : null
-                    }
-                    {
-                        this.state.page && this.props.showPageNumbers && this.renderPaginationNumbers()
-                    }
-                    {
-                        this.state.page < this.state.totalPages ? (
-                            <Link className="page-next" to={() => this.changePage(this.state.page + 1)}>Next</Link>
-                        ) : null
-                    }
-                    {
-                        this.state.page && this.state.page < this.state.totalPages && this.props.showLast ? (
-                            <Link className="page-last" to={() => this.changePage(this.state.totalPages)}>Last</Link>
-                        ) : null
-                    }
-                </div>
-            </Fragment>
+            <div className="pagination">
+                {
+                    this.props.page && this.props.page > 1 && this.props.showFirst ? (
+                        <Link className="page-first" onClick={() => this.props.changePage(1)} to={() => this.props.setPage(1)}>First</Link>
+                    ) : null
+                }
+                {
+                    this.props.page > 1 ? (
+                        <Link className="page-prev" onClick={() => this.props.changePage(this.props.page - 1)} to={() => this.props.setPage(this.props.page - 1)}>Prev</Link>
+                    ) : null
+                }
+                {
+                    this.props.page && this.props.showPageNumbers && this.renderPaginationNumbers()
+                }
+                {
+                    this.props.page < this.props.totalPages ? (
+                        <Link className="page-next" onClick={() => this.props.changePage(this.props.page + 1)} to={() => this.props.setPage(this.props.page + 1)}>Next</Link>
+                    ) : null
+                }
+                {
+                    this.props.page && this.props.page < this.props.totalPages && this.props.showLast ? (
+                        <Link className="page-last" onClick={() => this.props.changePage(this.props.totalPages)} to={() => this.props.setPage(this.props.totalPages)}>Last</Link>
+                    ) : null
+                }
+            </div>
         )
     }
 }

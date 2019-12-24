@@ -1,7 +1,8 @@
 import React from 'react';
 import queryString from 'query-string';
-import Pagination from "./Pagination";
+import Pagination from "../Pagination";
 import {Link} from "react-router-dom";
+import { getDataAtUrl } from "../../api";
 
 export default class App extends React.Component{
 
@@ -9,12 +10,23 @@ export default class App extends React.Component{
         super(props);
 
         this.state = {
+            todos: [],
             page: queryString.parse(this.props.location.search).page || 1,
             limit: queryString.parse(this.props.location.search).limit || 10,
+            total: null,
+            totalOnPage: 0,
+            totalPages: 0,
             order: queryString.parse(this.props.location.search).order || 'new',
         };
 
+        this.getTodos = this.getTodos.bind(this);
         this.handleSelect = this.handleSelect.bind(this);
+        this.setPage = this.setPage.bind(this);
+        this.changePage = this.changePage.bind(this);
+    }
+
+    componentDidMount(){
+        this.getTodos();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot){
@@ -25,20 +37,49 @@ export default class App extends React.Component{
         }
     }
 
+    getTodos(){
+        let qs = queryString.stringify({
+            page: this.state.page,
+            limit: this.state.limit,
+            order: this.state.order
+        });
+
+        getDataAtUrl('/api/todo?' + qs, this.props.cacheResults)
+            .then(result => {
+                this.setState({
+                    todos: result.data.items,
+                    page: result.data.page,
+                    limit: result.data.limit,
+                    total: result.data.total,
+                    totalOnPage: result.data.totalOnPage,
+                    totalPages: result.data.totalPages
+                })
+            })
+    }
+
     handleSelect(e, stateName){
         this.setState({
             [stateName]: e.target.value
-        })
+        }, this.getTodos)
+    }
+
+    changePage(pageNumber){
+        this.setState({
+            page: pageNumber
+        }, this.getTodos);
+    }
+
+    setPage(page){
+        let qs = queryString.stringify({
+            page: page,
+            limit: this.state.limit,
+            order: this.state.order
+        });
+
+        return '/todo?' + qs;
     }
 
     render(){
-        if(this.state.page){
-            let qs = queryString.stringify({
-                page: this.state.page,
-                limit: this.state.limit,
-                order: this.state.order
-            });
-
             return (
                 <div className="App">
                     <div>
@@ -59,26 +100,25 @@ export default class App extends React.Component{
                         <option value="new">Newest</option>
                         <option value="old">Oldest</option>
                     </select>
+                    {
+                        this.state.todos.length > 0 && this.state.todos.map((todo, i) => {
+                            return (
+                                <div key={i}>
+                                    {todo.id}: {todo.title} - {todo.priority} - {todo.completed ? 'Complete' : 'Incomplete'}
+                                    <Link to={'/todo/' + todo.id}>Edit</Link>
+                                </div>
+                            );
+                        })
+                    }
                     <Pagination
-                        apiUrl={'/api/todo?' + qs}
+                        page={this.state.page}
+                        setPage={this.setPage}
+                        changePage={this.changePage}
+                        totalPages={this.state.totalPages}
                         showFirst
                         showLast
-                    >
-                        {(todos) => {
-                            return todos.length > 0 && todos.map((todo, i) => {
-                                return (
-                                    <div key={i}>
-                                        {todo.id}: {todo.title} - {todo.priority} - {todo.completed ? 'Complete' : 'Incomplete'}
-                                        <Link to={'/todo/' + todo.id}>Edit</Link>
-                                    </div>
-                                );
-                            })
-                        }}
-                    </Pagination>
+                    />
                 </div>
             );
-        } else {
-            return null;
-        }
     }
 }

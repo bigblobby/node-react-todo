@@ -36,7 +36,6 @@ export default class TodoCreate extends React.Component {
             'priority': this.state.todoPriority,
             'completed': this.state.todoCompleted
         }).then(result => {
-            console.log(result);
             if(result.data.message) this.setState({
                 serverMessage: result.data.message
             })

@@ -26,8 +26,8 @@ export default class Pagination extends React.Component {
         showPageNumbers: true
     };
 
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
 
         this.renderPaginationNumbers = this.renderPaginationNumbers.bind(this);
     }

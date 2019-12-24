@@ -61,7 +61,6 @@ export default class App extends React.Component{
                     </select>
                     <Pagination
                         apiUrl={'/api/todo?' + qs}
-                        url={'/todo?' + qs}
                         pageOffset={1}
                         showFirst
                         showLast

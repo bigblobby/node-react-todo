@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
-import {NavLink, Link} from "react-router-dom";
-import axios from "axios";
+import { Link } from "react-router-dom";
 import queryString from 'query-string';
-import { range } from "./helpers";
+import { range } from "../utils/helpers";
+import { getDataAtUrl } from "../api";
 
 export default class Pagination extends React.Component {
     static defaultProps = {
@@ -37,7 +37,7 @@ export default class Pagination extends React.Component {
     }
 
     getItems(){
-        axios.get(this.props.apiUrl)
+        getDataAtUrl(this.props.apiUrl)
             .then(result => {
                 this.setState({
                     items: result.data.items,
@@ -51,8 +51,10 @@ export default class Pagination extends React.Component {
     }
 
     changePage(page){
-        const url = this.props.url.split('?')[0];
-        const qs = this.props.url.split('?')[1];
+        const stripedUrl = this.props.apiUrl.slice(4);
+
+        const url = stripedUrl.split('?')[0];
+        const qs = stripedUrl.split('?')[1];
         const parsedString = queryString.parse(qs);
         parsedString.page = page;
 

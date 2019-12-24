@@ -11,8 +11,6 @@ async function getAll(req, res){
         options = {offset: offset, limit: limit};
     }
 
-
-
     Article.findAndCountAll(options)
         .then(result => {
             const totalPages = Math.ceil(result.count / limit);
@@ -24,7 +22,6 @@ async function getAll(req, res){
             res.status(200).json({
                 total: result.count,
                 totalOnPage: result.rows.length,
-                limit: limit,
                 page: Number(req.query.page),
                 totalPages: totalPages,
                 items: result.rows

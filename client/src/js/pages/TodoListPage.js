@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 import { getDataAtUrl } from "../api";
 import TodoList from "../components/TodoList/TodoList";
 
-export default class App extends React.Component{
+export default class TodoListPage extends React.Component{
 
     constructor(props) {
         super(props);
@@ -73,7 +73,7 @@ export default class App extends React.Component{
     }
 
     render(){
-        const {total, limit, order, todos, page, totalPages} = this.state;
+        const {limit, order, todos, page, totalPages} = this.state;
         const TodoListProps = {
             todos: todos,
             limit: limit,

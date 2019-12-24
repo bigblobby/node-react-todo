@@ -55,3 +55,7 @@ Content-Type: application/json
 GET http://{{host}}/api/article?page=2&limit=5
 
 ###
+
+GET http://{{host}}/api/article
+
+###

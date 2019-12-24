@@ -23,7 +23,7 @@ async function getAll(req, res){
             }
 
             if(req.query.page) {
-                // TODO: Limit and totalOnPage are not used, may want to remove them
+                // TODO: totalOnPage is not used on the frontend, may want to remove
                 res.status(200).json({
                     total: result.count,
                     totalOnPage: result.rows.length,

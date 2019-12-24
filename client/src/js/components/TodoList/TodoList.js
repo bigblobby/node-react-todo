@@ -1,6 +1,6 @@
 import React from 'react';
 import queryString from 'query-string';
-import Pagination from "../Pagination";
+import Pagination from "../Pagination/index";
 import {Link} from "react-router-dom";
 import { getDataAtUrl } from "../../api";
 
@@ -14,8 +14,8 @@ export default class App extends React.Component{
             page: queryString.parse(this.props.location.search).page || 1,
             limit: queryString.parse(this.props.location.search).limit || 10,
             total: null,
-            totalOnPage: 0,
-            totalPages: 0,
+            totalOnPage: null,
+            totalPages: 1,
             order: queryString.parse(this.props.location.search).order || 'new',
         };
 
@@ -29,14 +29,6 @@ export default class App extends React.Component{
         this.getTodos();
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot){
-        let pageNo = queryString.parse(this.props.location.search).page || 1;
-
-        if(prevState.page !== pageNo){
-            this.setState({page: pageNo});
-        }
-    }
-
     getTodos(){
         let qs = queryString.stringify({
             page: this.state.page,
@@ -44,7 +36,7 @@ export default class App extends React.Component{
             order: this.state.order
         });
 
-        getDataAtUrl('/api/todo?' + qs, this.props.cacheResults)
+        getDataAtUrl('/api/todo?' + qs, false)
             .then(result => {
                 this.setState({
                     todos: result.data.items,
@@ -53,8 +45,8 @@ export default class App extends React.Component{
                     total: result.data.total,
                     totalOnPage: result.data.totalOnPage,
                     totalPages: result.data.totalPages
-                })
-            })
+                });
+            });
     }
 
     handleSelect(e, stateName){
@@ -80,19 +72,22 @@ export default class App extends React.Component{
     }
 
     render(){
+        if(this.state.total) {
             return (
                 <div className="App">
                     <div>
-                        <Link to={'/todo/create'}>Create todo</Link>
+                        <Link to={ '/todo/create' }>Create todo</Link>
                     </div>
                     <label htmlFor="per-page-dropdown">Per Page:</label>
-                    <select id="per-page-dropdown" value={this.state.limit} onChange={(e) => this.handleSelect(e, 'limit')}>
+                    <select id="per-page-dropdown" value={ this.state.limit }
+                            onChange={ (e) => this.handleSelect(e, 'limit') }>
                         <option value="10">10</option>
                         <option value="20">20</option>
                         <option value="50">50</option>
                     </select>
                     <label htmlFor="order-dropdown">Sort by:</label>
-                    <select id="order-dropdown" value={this.state.order} onChange={(e) => this.handleSelect(e, 'order')}>
+                    <select id="order-dropdown" value={ this.state.order }
+                            onChange={ (e) => this.handleSelect(e, 'order') }>
                         <option value="ph">Priority High</option>
                         <option value="pl">Priority Low</option>
                         <option value="a-z">A-Z</option>
@@ -103,22 +98,25 @@ export default class App extends React.Component{
                     {
                         this.state.todos.length > 0 && this.state.todos.map((todo, i) => {
                             return (
-                                <div key={i}>
-                                    {todo.id}: {todo.title} - {todo.priority} - {todo.completed ? 'Complete' : 'Incomplete'}
-                                    <Link to={'/todo/' + todo.id}>Edit</Link>
+                                <div key={ i }>
+                                    { todo.id }: { todo.title } - { todo.priority } - { todo.completed ? 'Complete' : 'Incomplete' }
+                                    <Link to={ '/todo/' + todo.id }>Edit</Link>
                                 </div>
                             );
                         })
                     }
                     <Pagination
-                        page={this.state.page}
-                        setPage={this.setPage}
-                        changePage={this.changePage}
-                        totalPages={this.state.totalPages}
+                        page={ this.state.page }
+                        totalPages={ this.state.totalPages }
+                        setPage={ this.setPage }
+                        changePage={ this.changePage }
                         showFirst
                         showLast
                     />
                 </div>
             );
+        } else {
+            return null;
+        }
     }
 }

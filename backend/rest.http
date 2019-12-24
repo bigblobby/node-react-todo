@@ -42,3 +42,16 @@ Content-Type: application/json
 
 ###
 
+POST http://{{host}}/api/article
+Content-Type: application/json
+
+{
+    "title": "article twelve",
+    "content": "this is some content"
+}
+
+###
+
+GET http://{{host}}/api/article?page=2&limit=5
+
+###

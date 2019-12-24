@@ -6,6 +6,7 @@ const port = process.env.PORT;
 const sequelize = require('./db');
 
 const todoRouter = require('./todo/todo.router');
+const articleRouter = require('./article/article.router');
 
 app.use(morgan('dev'));
 app.use(express.json());
@@ -16,6 +17,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/todo', todoRouter);
+app.use('/api/article', articleRouter);
 
 async function startServer(){
     try {

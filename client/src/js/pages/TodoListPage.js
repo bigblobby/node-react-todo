@@ -81,9 +81,9 @@ export default class App extends React.Component{
             handleSelect: this.handleSelect
         };
 
-        if(total) {
+        if(todos.length) {
             return (
-                <div className="App">
+                <div className="todo-listing-page">
                     <div>
                         <Link to={ '/todo/create' }>Create todo</Link>
                     </div>

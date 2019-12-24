@@ -61,10 +61,8 @@ export default class App extends React.Component{
                     </select>
                     <Pagination
                         apiUrl={'/api/todo?' + qs}
-                        pageOffset={1}
                         showFirst
                         showLast
-                        showPageNumbers
                     >
                         {(todos) => {
                             return todos.length > 0 && todos.map((todo, i) => {

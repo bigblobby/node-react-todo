@@ -8,7 +8,9 @@ function getCached(key, fallback){
     return cache[key];
 }
 
-export function getDataAtUrl(url){
+export function getDataAtUrl(url, cacheResults = false){
+    if(!cacheResults) return axios.get(url);
+
     return getCached(url, () => {
         return axios.get(url)
     });

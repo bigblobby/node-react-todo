@@ -1,5 +1,13 @@
-export const range = (start, end) => {
-    return Array((end + 1) - start)
-        .fill()
-        .map((_, i) => i + start);
+/**
+ * @param start {number}
+ * @param end {number}
+ * @param step {number}
+ * @returns {[]}
+ */
+export const range = (start, end, step = 1) => {
+    let newArr = [];
+    for(let i = start; i <= end; i += step){
+        newArr.push(i);
+    }
+    return newArr;
 };

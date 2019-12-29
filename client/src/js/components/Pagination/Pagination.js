@@ -23,7 +23,11 @@ export default class Pagination extends React.Component {
         pageRangeDisplayed: 1,
         showFirst: false,
         showLast: false,
-        showPageNumbers: true
+        showPageNumbers: true,
+        firstIcon: 'First',
+        prevIcon: 'Prev',
+        nextIcon: 'Next',
+        lastIcon: 'Last'
     };
 
     constructor() {
@@ -39,7 +43,7 @@ export default class Pagination extends React.Component {
         return range(first, last).map(page => {
             return (
                 <Link
-                    className={"page-num " + (this.props.page == page ? 'active' : '')}
+                    className={"page-num " + (this.props.page === page ? 'active' : '')}
                     key={page}
                     onClick={() => this.props.changePage(page)}
                     to={() => this.props.setPage(page)}
@@ -59,7 +63,7 @@ export default class Pagination extends React.Component {
                             className="page-first"
                             onClick={() => changePage(1)}
                             to={() => setPage(1)}
-                        >First</Link>
+                        >{this.props.firstIcon}</Link>
                     ) : null
                 }
                 {
@@ -68,7 +72,7 @@ export default class Pagination extends React.Component {
                             className="page-prev"
                             onClick={() => changePage(page - 1)}
                             to={() => setPage(page - 1)}
-                        >Prev</Link>
+                        >{this.props.prevIcon}</Link>
                     ) : null
                 }
                 {
@@ -80,7 +84,7 @@ export default class Pagination extends React.Component {
                             className="page-next"
                             onClick={() => changePage(page + 1)}
                             to={() => setPage(page + 1)}
-                        >Next</Link>
+                        >{this.props.nextIcon}</Link>
                     ) : null
                 }
                 {
@@ -89,7 +93,7 @@ export default class Pagination extends React.Component {
                             className="page-last"
                             onClick={() => changePage(totalPages)}
                             to={() => setPage(totalPages)}
-                        >Last</Link>
+                        >{this.props.lastIcon}</Link>
                     ) : null
                 }
             </div>

@@ -1,7 +1,8 @@
 import React from 'react';
-import axios from 'axios';
 import { getProducts } from "../api";
 import { Link } from "react-router-dom";
+
+let timer;
 
 export default class ProductListPage extends React.Component {
     constructor(props) {
@@ -13,20 +14,35 @@ export default class ProductListPage extends React.Component {
             products: []
         };
 
+        this.onScroll = this.onScroll.bind(this);
         this.fetchProducts = this.fetchProducts.bind(this);
     }
 
     componentDidMount(){
         this.fetchProducts();
+        window.addEventListener('scroll', this.onScroll);
+    }
 
-        window.addEventListener('scroll', () => {
+    componentWillUnmount(){
+        window.removeEventListener('scroll', this.onScroll);
+    }
+
+    onScroll(){
+        const self = this;
+        if(timer) {
+            clearTimeout(timer);
+        }
+        timer = setTimeout(function() {
+            console.log( "Firing!" );
             if(window.innerHeight + document.documentElement.scrollTop > (document.documentElement.offsetHeight - 200)){
-                if(!this.state.loading && this.state.hasMore){
-                    this.fetchProducts();
+                if(!self.state.loading && self.state.hasMore){
+                    self.fetchProducts();
                 }
             }
-        });
+        }, 20);
     }
+
+
 
     fetchProducts(){
         this.setState({loading: true}, () => {

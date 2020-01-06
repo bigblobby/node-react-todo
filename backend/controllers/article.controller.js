@@ -1,4 +1,4 @@
-const Article = require('./article.model');
+const Article = require('../models/article.model');
 const Op = require('sequelize').Op;
 
 async function getAll(req, res){

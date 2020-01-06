@@ -28,7 +28,7 @@ GET http://{{host}}/api/todo/6
 
 ###
 
-DELETE http://{{host}}/api/todo/6
+//DELETE http://{{host}}/api/todo/6
 
 ###
 
@@ -59,3 +59,9 @@ GET http://{{host}}/api/article?page=2&limit=5
 GET http://{{host}}/api/article
 
 ###
+
+GET http://{{host}}/
+
+###
+
+

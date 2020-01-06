@@ -11,6 +11,7 @@
         "nodemon": "^2.0.2"
     },
     "scripts": {
-        "dev": "nodemon app.js"
+        "dev": "nodemon app.js",
+        "inspect": "nodemon --inspect app.js"
     }
 }

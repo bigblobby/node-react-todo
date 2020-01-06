@@ -62,6 +62,7 @@ export default class TodoListPage extends React.Component{
         }, this.getTodos);
     }
 
+    // This isnt required, its used to sync up the url with the data
     setPage(page){
         let qs = queryString.stringify({
             page: page,

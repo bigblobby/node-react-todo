@@ -1,5 +1,5 @@
-const Todo = require('./todo.model');
-const helper = require('./helper');
+const Todo = require('../models/todo.model');
+const helper = require('../helpers/todo.helpers');
 const Op = require('sequelize').Op;
 
 async function getAll(req, res){
@@ -49,7 +49,7 @@ function getOne(req, res){
     Todo.findByPk(req.params.id)
         .then(item => {
             if(item) {
-                console.log(item);
+                //console.log(item);
                 res.status(200).json(item);
             } else {
                 console.log('No todo found');

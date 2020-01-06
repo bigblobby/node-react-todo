@@ -3,6 +3,7 @@ import queryString from 'query-string';
 import Pagination from "../components/Pagination/Pagination";
 import { getDataAtUrl } from "../api";
 import ArticleList from "../components/ArticleList";
+import { Link } from "react-router-dom";
 
 export default class ArticleListPage extends React.Component{
 
@@ -29,7 +30,7 @@ export default class ArticleListPage extends React.Component{
     getArticles(){
         const qs = queryString.stringify({ page: this.state.page });
 
-        getDataAtUrl('/api/article?' + qs, false)
+        getDataAtUrl('/api/article?' + qs, true)
             .then(result => {
                 this.setState({
                     articles: result.data.items,
@@ -59,6 +60,7 @@ export default class ArticleListPage extends React.Component{
         if(articles.length) {
             return (
                 <div className="article-listing-page">
+                    <Link to={'/product'}>Products</Link>
                     <ArticleList {...ArticleListProps} />
                     <Pagination
                         page={ page }

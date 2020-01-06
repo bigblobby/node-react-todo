@@ -4,6 +4,7 @@ import TodoListPage from "./pages/TodoListPage";
 import TodoEdit from "./components/TodoEdit";
 import TodoCreate from "./components/TodoCreate";
 import ArticleListPage from "./pages/ArticleListPage";
+import ProductListPage from "./pages/ProductListPage";
 
 export default class Routes extends React.Component {
     render() {
@@ -15,6 +16,7 @@ export default class Routes extends React.Component {
                         <Route path="/todo/create" component={TodoCreate}/>
                         <Route path="/todo/:id" component={TodoEdit}/>
                         <Route path="/article" component={ArticleListPage}/>
+                        <Route path="/product" component={ProductListPage}/>
                     </Switch>
                 </div>
             </BrowserRouter>

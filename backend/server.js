@@ -11,6 +11,7 @@ const { createReadStream } = require('fs');
 
 const todoRouter = require('./routers/todo.router');
 const articleRouter = require('./routers/article.router');
+const productRouter = require('./routers/product.router');
 
 app.use(morgan('dev'));
 app.use(express.json());
@@ -22,6 +23,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/todo', todoRouter);
 app.use('/api/article', articleRouter);
+app.use('/api/product', productRouter);
 
 async function startServer() {
     try {

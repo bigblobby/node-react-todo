@@ -64,4 +64,18 @@ GET http://{{host}}/
 
 ###
 
+POST http://{{host}}/api/product
+Content-Type: application/json
+
+{
+    "name": "product name",
+    "price": 19.99
+}
+
+###
+
+GET http://{{host}}/api/product?set=5&limit=10
+
+###
+
 

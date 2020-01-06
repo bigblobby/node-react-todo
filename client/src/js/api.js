@@ -16,3 +16,11 @@ export function getDataAtUrl(url, cacheResults = false){
     });
 }
 
+export function getProducts(params){
+    let url = '/api/product?set=' + params.set + '&limit=15';
+
+    return getCached(url, () => {
+        return axios.get(url);
+    });
+}
+

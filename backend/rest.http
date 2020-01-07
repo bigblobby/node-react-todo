@@ -78,4 +78,8 @@ GET http://{{host}}/api/product?set=5&limit=10
 
 ###
 
+DELETE http://{{host}}/api/todo/9
+
+###
+
 

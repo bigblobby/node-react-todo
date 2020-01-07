@@ -24,3 +24,8 @@ export function getProducts(params){
     });
 }
 
+export function deleteTodo(id){
+    console.log(id);
+    return axios.delete('/api/todo/' + id);
+}
+

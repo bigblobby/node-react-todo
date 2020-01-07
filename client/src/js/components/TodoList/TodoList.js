@@ -1,7 +1,8 @@
 import React, {Fragment} from "react";
 import { Link } from "react-router-dom";
+import Modal from "../Modal";
 
-export default function TodoList({todos, limit, order, handleSelect}){
+export default function TodoList({todos, limit, order, handleSelect, handleModal, handleYes, handleNo, modalId}){
     return (
         <Fragment>
             <label htmlFor="per-page-dropdown">Per Page:</label>
@@ -31,6 +32,18 @@ export default function TodoList({todos, limit, order, handleSelect}){
                         <div key={ i }>
                             { todo.id }: { todo.title } - { todo.priority } - { todo.completed ? 'Complete' : 'Incomplete' }
                             <Link to={ '/todo/' + todo.id }>Edit</Link>
+                            <span onClick={() => handleModal(todo.id)}>Delete</span>
+                            {
+                                modalId === todo.id ? (
+                                    <Modal>
+                                        <p>Are you sure you want to delete this todo?</p>
+                                        <p>
+                                            <button onClick={() => handleYes(todo.id)}>Yes</button>
+                                            <button onClick={handleNo}>No</button>
+                                        </p>
+                                    </Modal>
+                                ) : null
+                            }
                         </div>
                     );
                 })

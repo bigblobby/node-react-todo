@@ -2,7 +2,7 @@ import React from 'react';
 import queryString from 'query-string';
 import Pagination from "../components/Pagination/Pagination";
 import {Link} from "react-router-dom";
-import { getDataAtUrl } from "../api";
+import { deleteTodo, getDataAtUrl } from "../api";
 import TodoList from "../components/TodoList/TodoList";
 
 export default class TodoListPage extends React.Component{
@@ -18,9 +18,13 @@ export default class TodoListPage extends React.Component{
             totalOnPage: null,
             totalPages: 1,
             order: queryString.parse(this.props.location.search).order || 'new',
+            modalId: null,
         };
 
         this.getTodos = this.getTodos.bind(this);
+        this.handleModal = this.handleModal.bind(this);
+        this.handleYes = this.handleYes.bind(this);
+        this.handleNo = this.handleNo.bind(this);
         this.handleSelect = this.handleSelect.bind(this);
         this.setPage = this.setPage.bind(this);
         this.changePage = this.changePage.bind(this);
@@ -37,7 +41,7 @@ export default class TodoListPage extends React.Component{
             order: this.state.order
         });
 
-        getDataAtUrl('/api/todo?' + qs, true)
+        getDataAtUrl('/api/todo?' + qs, false)
             .then(result => {
                 this.setState({
                     todos: result.data.items,
@@ -48,6 +52,26 @@ export default class TodoListPage extends React.Component{
                     totalPages: result.data.totalPages
                 });
             });
+    }
+
+    handleModal(id){
+        this.setState({
+            modalId: id
+        });
+    }
+
+    handleYes(id){
+        deleteTodo(id).then(() => {
+            this.setState({
+                modalId: null
+            }, this.getTodos)
+        });
+    }
+
+    handleNo(){
+        this.setState({
+            modalId: null
+        })
     }
 
     handleSelect(e, stateName){
@@ -74,12 +98,16 @@ export default class TodoListPage extends React.Component{
     }
 
     render(){
-        const {limit, order, todos, page, totalPages} = this.state;
+        const {limit, order, todos, page, totalPages, modalId} = this.state;
         const TodoListProps = {
             todos: todos,
             limit: limit,
             order: order,
-            handleSelect: this.handleSelect
+            handleSelect: this.handleSelect,
+            handleModal: this.handleModal,
+            handleYes: this.handleYes,
+            handleNo: this.handleNo,
+            modalId: modalId
         };
 
         if(todos.length) {

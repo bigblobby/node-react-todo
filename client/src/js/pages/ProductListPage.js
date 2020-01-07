@@ -2,13 +2,12 @@ import React from 'react';
 import { getProducts } from "../api";
 import { Link } from "react-router-dom";
 
-let timer;
-
 export default class ProductListPage extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            timer: null,
             loading: false,
             set: 1,
             products: []
@@ -29,20 +28,20 @@ export default class ProductListPage extends React.Component {
 
     onScroll(){
         const self = this;
-        if(timer) {
-            clearTimeout(timer);
+        if(this.state.timer) {
+            clearTimeout(this.state.timer);
         }
-        timer = setTimeout(function() {
-            console.log( "Firing!" );
-            if(window.innerHeight + document.documentElement.scrollTop > (document.documentElement.offsetHeight - 200)){
-                if(!self.state.loading && self.state.hasMore){
-                    self.fetchProducts();
+        this.setState({
+            timer: setTimeout(function() {
+                console.log( "Firing!" );
+                if(window.innerHeight + document.documentElement.scrollTop > (document.documentElement.offsetHeight - 200)){
+                    if(!self.state.loading && self.state.hasMore){
+                        self.fetchProducts();
+                    }
                 }
-            }
-        }, 20);
+            }, 20)
+        });
     }
-
-
 
     fetchProducts(){
         this.setState({loading: true}, () => {

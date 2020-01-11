@@ -1,29 +1,35 @@
 require('dotenv').config();
+const https = require('https');
+const http = require('http');
+const path = require('path');
 const express = require('express');
-var https = require('https');
-var http = require('http');
 const app = express();
 const morgan = require('morgan');
 const port = process.env.PORT;
 const sequelize = require('./db');
 
-const { createReadStream } = require('fs');
-
+// Apps/Routers
 const todoRouter = require('./routers/todo.router');
 const articleRouter = require('./routers/article.router');
 const productRouter = require('./routers/product.router');
 
+app.disable('x-powered-by');
+app.disable('X-Powered-By');
+
+// Middleware
+app.use(express.static(path.join(__dirname, '../client/build')));
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-});
-
+// Routes
 app.use('/api/todo', todoRouter);
 app.use('/api/article', articleRouter);
 app.use('/api/product', productRouter);
+
+app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 async function startServer() {
     try {

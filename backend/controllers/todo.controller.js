@@ -49,7 +49,6 @@ function getOne(req, res){
     Todo.findByPk(req.params.id)
         .then(item => {
             if(item) {
-                //console.log(item);
                 res.status(200).json(item);
             } else {
                 console.log('No todo found');

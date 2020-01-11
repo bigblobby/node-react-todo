@@ -81,9 +81,11 @@ export default class TodoListPage extends React.Component{
     }
 
     changePage(pageNumber){
-        this.setState({
-            page: pageNumber
-        }, this.getTodos);
+        if(pageNumber !== this.state.page){
+            this.setState({
+                page: pageNumber
+            }, this.getTodos);
+        }
     }
 
     // This isnt required, its used to sync up the url with the data

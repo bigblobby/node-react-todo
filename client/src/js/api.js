@@ -29,3 +29,13 @@ export function deleteTodo(id){
     return axios.delete('/api/todo/' + id);
 }
 
+export function register(params){
+    const url = '/api/user/register';
+    return axios.post(url, params);
+}
+
+export function login(params){
+    const url = '/api/user/login';
+    return axios.post(url, params);
+}
+

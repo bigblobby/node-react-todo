@@ -6,6 +6,8 @@ import TodoCreate from "./components/TodoCreate";
 import ArticleListPage from "./pages/ArticleListPage";
 import ProductListPage from "./pages/ProductListPage";
 import HomePage from "./pages/HomePage";
+import RegisterPage from "./pages/RegisterPage";
+import LoginPage from "./pages/LoginPage";
 
 export default class Routes extends React.Component {
     render() {
@@ -14,6 +16,8 @@ export default class Routes extends React.Component {
                 <div id="content">
                     <Switch>
                         <Route exact path="/" component={HomePage}/>
+                        <Route exact path="/register" component={RegisterPage}/>
+                        <Route exact path="/login" component={LoginPage}/>
                         <Route exact path="/todo" component={TodoListPage}/>
                         <Route path="/todo/create" component={TodoCreate}/>
                         <Route path="/todo/:id" component={TodoEdit}/>

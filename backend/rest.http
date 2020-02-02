@@ -108,7 +108,7 @@ Content-Type: application/json
 ###
 
 GET http://{{host}}/protected
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjAsImlhdCI6MTU4MDY2MTgyOCwiZXhwIjoxNTgwNzQ4MjI4fQ.OdlNbTTEtWOSGTQaDb9mwgBLfZGtx7qrrYFZCL_aCtM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjAsImlhdCI6MTU4MDY3OTQyNiwiZXhwIjoxNTgwNjc5NTEyfQ.UHV1pr8CmxsL5E1tEnGF_3bryTHm_wra-0iKMnKLYB4
 
 ###
 

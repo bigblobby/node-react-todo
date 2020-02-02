@@ -52,7 +52,8 @@ async function login(req, res){
 
         if (match) {
             let payload = { id: user.id };
-            let token = jwt.sign(payload, jwtOptions.secretOrKey, {expiresIn: 86400});
+            let token = jwt.sign(payload, jwtOptions.secretOrKey, {expiresIn: process.env.JWT_EXPIRE});
+            res.cookie('token', token, {maxAge: process.env.JWT_EXPIRE * 1000});
             res.status(201).json({ msg: 'ok', token: token });
         } else {
             res.status(401).json({ msg: 'Password is incorrect' });

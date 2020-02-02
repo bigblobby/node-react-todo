@@ -86,4 +86,30 @@ GET http://{{host}}/api/todo/hello
 
 ###
 
+POST http://{{host}}/api/user/register
+Content-Type: application/json
+
+{
+    "username": "BigBlobby",
+    "password": "12345",
+    "email": "test@example.com"
+}
+
+###
+
+POST http://{{host}}/api/user/login
+Content-Type: application/json
+
+{
+    "username": "BigBlobby",
+    "password": "12345"
+}
+
+###
+
+GET http://{{host}}/protected
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjAsImlhdCI6MTU4MDY2MTgyOCwiZXhwIjoxNTgwNzQ4MjI4fQ.OdlNbTTEtWOSGTQaDb9mwgBLfZGtx7qrrYFZCL_aCtM
+
+###
+
 

@@ -17,8 +17,8 @@ export default class LoginPage extends React.Component {
 
     componentDidMount(){
         // Check if user is already logged in, if so redirect to homepage
-        let stuff = queryString.parse(document.cookie);
-        if('token' in stuff){
+        let cookies = queryString.parse(document.cookie);
+        if('token' in cookies){
             this.props.history.push("/");
         }
     }
@@ -42,7 +42,6 @@ export default class LoginPage extends React.Component {
     }
 
     render(){
-        console.log(this.props.history)
         return(
             <div>
                 <form onSubmit={this.handleSubmit}>

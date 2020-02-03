@@ -108,7 +108,16 @@ Content-Type: application/json
 ###
 
 GET http://{{host}}/protected
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjAsImlhdCI6MTU4MDY3OTQyNiwiZXhwIjoxNTgwNjc5NTEyfQ.UHV1pr8CmxsL5E1tEnGF_3bryTHm_wra-0iKMnKLYB4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjAsImlhdCI6MTU4MDY4MTQ0NywiZXhwIjoxNTgwNzY3ODQ3fQ.r87Nhp64PFnBWUowLjhT1APuLF9x6aJyxCS7kPc6Ejo
+
+###
+
+POST http://{{host}}/api/user/account
+Content-Type: application/json
+
+{
+    "id": "22"
+}
 
 ###
 

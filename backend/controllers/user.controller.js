@@ -1,4 +1,5 @@
 const User = require('../models/user.model');
+const decorator = require('../decorators/user.decorator');
 const jwt = require('jsonwebtoken');
 const passportJWT = require('passport-jwt');
 
@@ -52,8 +53,8 @@ async function login(req, res){
 
         if (match) {
             let payload = { id: user.id };
-            let token = jwt.sign(payload, jwtOptions.secretOrKey, {expiresIn: process.env.JWT_EXPIRE});
-            res.cookie('token', token, {maxAge: process.env.JWT_EXPIRE * 1000});
+            let token = jwt.sign(payload, jwtOptions.secretOrKey, {expiresIn: Number(process.env.JWT_EXPIRE)});
+            res.cookie('token', token, {maxAge: Number(process.env.JWT_EXPIRE) * 1000});
             res.status(201).json({ msg: 'ok', token: token });
         } else {
             res.status(401).json({ msg: 'Password is incorrect' });
@@ -61,9 +62,28 @@ async function login(req, res){
     }
 }
 
+function getUser(req, res){
+    User.findOne({
+       where: {id: req.body.id}
+    }).then(result => {
+        if(result){
+            res.status(200).json({
+                user: decorator.decorateUser(result)
+            })
+        } else {
+            res.status(404).json({
+                message: 'No user found'
+            });
+        }
+    }).catch(err => {
+        res.status(500).json({message: err});
+    })
+}
+
 module.exports = {
     register: register,
     login: login,
-    strategy: strategy,
+    getUser: getUser,
+    strategy: strategy
 };
 

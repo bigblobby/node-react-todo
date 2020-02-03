@@ -39,3 +39,8 @@ export function login(params){
     return axios.post(url, params);
 }
 
+export function getUser(params){
+    const url = '/api/user/account';
+    return axios.post(url, params);
+}
+

@@ -8,7 +8,7 @@ const morgan = require('morgan');
 const port = process.env.PORT;
 const sequelize = require('./db');
 const passport = require('passport');
-const strategy = require('./controllers/user.controller').strategy;
+const strategy = require('./helpers/user.helper').strategy;
 
 // Apps/Routers
 const todoRouter = require('./routers/todo.router');

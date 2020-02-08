@@ -16,6 +16,14 @@ const User = db.define('user', {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true
+    },
+    firstName: {
+        type: Sequelize.STRING,
+        allowNull: true,
+    },
+    lastName: {
+        type: Sequelize.STRING,
+        allowNull: true,
     }
 }, {
     modelName: 'user',
@@ -44,5 +52,7 @@ User.prototype.checkPassword = async function(password){
         });
     });
 };
+
+User.sync();
 
 module.exports = User;

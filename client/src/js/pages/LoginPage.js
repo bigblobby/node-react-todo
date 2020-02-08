@@ -8,7 +8,8 @@ export default class LoginPage extends React.Component {
 
         this.state = {
             username: '',
-            password: ''
+            password: '',
+            error: null,
         };
 
         this.handleInput = this.handleInput.bind(this);
@@ -19,7 +20,7 @@ export default class LoginPage extends React.Component {
         // Check if user is already logged in, if so redirect to homepage
         let cookies = queryString.parse(document.cookie);
         if('token' in cookies){
-            this.props.history.push("/");
+            this.props.history.push("/account");
         }
     }
 
@@ -38,6 +39,10 @@ export default class LoginPage extends React.Component {
             if(result.data.token){
                 this.props.history.goBack();
             }
+        }).catch(err => {
+            this.setState({
+                error: err.response.data.message
+            })
         });
     }
 
@@ -53,6 +58,11 @@ export default class LoginPage extends React.Component {
                         <label htmlFor="register-password">Password: </label>
                         <input id="register-password" type="password" name="password" onChange={this.handleInput}/>
                     </div>
+                    {
+                        this.state.error ? (
+                            <p style={{color: 'red'}}>{this.state.error}</p>
+                        ) : null
+                    }
                     <div>
                         <button type="submit">Login</button>
                     </div>

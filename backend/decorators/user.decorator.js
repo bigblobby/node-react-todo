@@ -5,6 +5,9 @@ function decorateUser(user){
     decoratedUser.username = user.username;
     decoratedUser.email = user.email;
 
+    if(user.firstName) decoratedUser.firstName;
+    if(user.lastName) decoratedUser.lastName;
+
     return decoratedUser;
 }
 

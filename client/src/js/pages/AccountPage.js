@@ -1,7 +1,6 @@
 import React, {Fragment} from 'react';
 import queryString from "query-string";
-import jwt_decode from "jwt-decode";
-import { getUser } from "../api";
+import { verifyAndGetUser } from "../api";
 
 export default class AccountPage extends React.Component {
     constructor(props) {
@@ -18,12 +17,9 @@ export default class AccountPage extends React.Component {
     componentDidMount(){
         let cookies = queryString.parse(document.cookie);
         if('token' in cookies){
-            let decoded = jwt_decode(cookies.token);
 
-            //console.log(decoded.id);
-
-            getUser({
-                id: decoded.id
+            verifyAndGetUser({
+               token: cookies.token
             }).then(result => {
                 this.setState({
                     user: result.data.user
@@ -37,8 +33,6 @@ export default class AccountPage extends React.Component {
     }
 
     logout(){
-        let cookies = queryString.parse(document.cookie);
-        console.log(cookies.token);
         document.cookie =  'token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
         window.location = '/';
     }

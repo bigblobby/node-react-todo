@@ -1,5 +1,6 @@
 import React from 'react';
 import { register } from "../api";
+import queryString from "query-string";
 
 export default class RegisterPage extends React.Component {
 
@@ -16,6 +17,14 @@ export default class RegisterPage extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    componentDidMount(){
+        // Check if user is already logged in, if so redirect to homepage
+        let cookies = queryString.parse(document.cookie);
+        if('token' in cookies){
+            this.props.history.push("/account");
+        }
+    }
+
     handleInput(e){
         this.setState({[e.target.name]: e.target.value})
     }
@@ -29,6 +38,10 @@ export default class RegisterPage extends React.Component {
             password: this.state.password
         }).then(result => {
             console.log(result);
+            let cookies = queryString.parse(document.cookie);
+            if('token' in cookies){
+                this.props.history.push("/account");
+            }
         });
     }
 

@@ -1,4 +1,5 @@
 const Product = require('../models/product.model');
+const Op = require('sequelize').Op;
 
 function getAll(req, res){
     const set = req.query.set;
@@ -32,7 +33,24 @@ function createOne(req, res){
     });
 }
 
+function search(req, res){
+    console.log(req.body.query);
+    Product.findAll({
+        limit: 10,
+        where: {
+            name: {
+                [Op.like]: '%' + req.body.query + '%'
+            }
+        }
+    }).then(result => {
+        res.json({result: result});
+    }).catch(err => {
+        res.json({message: err});
+    })
+}
+
 module.exports = {
     getAll: getAll,
-    createOne: createOne
+    createOne: createOne,
+    search: search
 };

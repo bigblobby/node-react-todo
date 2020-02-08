@@ -68,7 +68,7 @@ POST http://{{host}}/api/product
 Content-Type: application/json
 
 {
-    "name": "product name",
+    "name": "yet another test",
     "price": 19.99
 }
 

@@ -44,3 +44,8 @@ export function verifyAndGetUser(params){
     return axios.post(url, params);
 }
 
+export function articleSearch(params){
+    const url = '/api/product/search';
+    return axios.post(url, params);
+}
+

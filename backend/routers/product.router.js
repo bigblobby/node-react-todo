@@ -5,4 +5,7 @@ router.route('/')
     .get(controller.getAll)
     .post(controller.createOne);
 
+router.route('/search')
+    .post(controller.search);
+
 module.exports = router;

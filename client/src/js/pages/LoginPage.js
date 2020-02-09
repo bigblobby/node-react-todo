@@ -36,6 +36,7 @@ export default class LoginPage extends React.Component {
             password: this.state.password
         }).then(result => {
             // Redirect to previous page after successful login
+            Auth.updateStorage();
             if(result.data.token){
                 this.props.history.goBack();
             }

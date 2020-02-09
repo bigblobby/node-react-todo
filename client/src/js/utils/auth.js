@@ -9,16 +9,12 @@ const Auth = {
     },
 
     getToken(){
-        this.updateStorage();
-
         if(this.checkTokenExists()){
             return this.storage.token;
         }
     },
 
     checkTokenExists() {
-        this.updateStorage();
-
         return 'token' in this.storage;
     },
 

@@ -23,6 +23,7 @@ export default class AccountPage extends React.Component {
                         user: result.data.user
                     });
                 }).catch(err => {
+                    this.props.history.push("/login");
                     console.dir(err);
                 });
         } else {

@@ -34,7 +34,7 @@ export default class ProductListPage extends React.Component {
         this.setState({
             timer: setTimeout(function() {
                 console.log( "Firing!" );
-                if(window.innerHeight + document.documentElement.scrollTop > (document.documentElement.offsetHeight - 200)){
+                if(window.innerHeight + document.documentElement.scrollTop > (document.documentElement.offsetHeight - 400)){
                     if(!self.state.loading && self.state.hasMore){
                         self.fetchProducts();
                     }

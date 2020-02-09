@@ -1,6 +1,5 @@
 import React, {Fragment} from 'react';
-import queryString from "query-string";
-import { verifyAndGetUser } from "../api";
+import Auth from '../utils/auth';
 
 export default class AccountPage extends React.Component {
     constructor(props) {
@@ -15,26 +14,24 @@ export default class AccountPage extends React.Component {
 
 
     componentDidMount(){
-        let cookies = queryString.parse(document.cookie);
-        if('token' in cookies){
+        const tokenExists = Auth.checkTokenExists();
 
-            verifyAndGetUser({
-               token: cookies.token
-            }).then(result => {
-                this.setState({
-                    user: result.data.user
+        if(tokenExists){
+            Auth.verifyTokenAndGetUser()
+                .then(result => {
+                    this.setState({
+                        user: result.data.user
+                    });
+                }).catch(err => {
+                    console.dir(err);
                 });
-            }).catch(err => {
-                console.log(err);
-            });
         } else {
             this.props.history.push("/login");
         }
     }
 
     logout(){
-        document.cookie =  'token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-        window.location = '/';
+        Auth.clearToken();
     }
 
     render(){
@@ -64,3 +61,4 @@ export default class AccountPage extends React.Component {
         );
     }
 }
+

@@ -1,6 +1,5 @@
 const Todo = require('../models/todo.model');
 const helper = require('../helpers/todo.helpers');
-const Op = require('sequelize').Op;
 
 async function getAll(req, res){
     let options = {};

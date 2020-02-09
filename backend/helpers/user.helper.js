@@ -22,7 +22,7 @@ let strategy = new JwtStrategy(jwtOptions, function(jwt_payload, next) {
 });
 
 function newToken(user){
-    return jwt.sign({id: user.id}, jwtOptions.secretOrKey, {expiresIn: Number(process.env.JWT_EXPIRE)});
+    return jwt.sign({id: user.id, roles: user.roles}, jwtOptions.secretOrKey, {expiresIn: Number(process.env.JWT_EXPIRE)});
 }
 
 function verifyToken(token){

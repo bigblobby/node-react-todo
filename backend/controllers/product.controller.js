@@ -34,7 +34,6 @@ function createOne(req, res){
 }
 
 function search(req, res){
-    console.log(req.body.query);
     Product.findAll({
         limit: 10,
         where: {
@@ -46,7 +45,7 @@ function search(req, res){
         res.json({result: result});
     }).catch(err => {
         res.json({message: err});
-    })
+    });
 }
 
 module.exports = {

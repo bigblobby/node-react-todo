@@ -1,6 +1,6 @@
 import React from 'react';
 import { login } from "../api";
-import queryString from 'query-string';
+import Auth from "../utils/auth";
 
 export default class LoginPage extends React.Component {
     constructor(props) {
@@ -18,8 +18,8 @@ export default class LoginPage extends React.Component {
 
     componentDidMount(){
         // Check if user is already logged in, if so redirect to homepage
-        let cookies = queryString.parse(document.cookie);
-        if('token' in cookies){
+        const tokenExists = Auth.checkTokenExists();
+        if(tokenExists){
             this.props.history.push("/account");
         }
     }

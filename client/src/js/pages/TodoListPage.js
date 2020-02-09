@@ -41,7 +41,7 @@ export default class TodoListPage extends React.Component{
             order: this.state.order
         });
 
-        getDataAtUrl('/api/todo?' + qs, true)
+        getDataAtUrl('/api/todo?' + qs)
             .then(result => {
                 this.setState({
                     todos: result.data.items,

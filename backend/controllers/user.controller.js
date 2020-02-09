@@ -13,6 +13,7 @@ function register(req, res, next){
                 res.json({ message: 'account created successfully' })
             }
         }).catch(err => {
+            console.log(err);
             res.status(500).json({err: err});
         });
 }
@@ -49,14 +50,15 @@ async function verifyUser(req, res){
     if(token){
         const tokenData = await userHelper.verifyToken(token);
         const user = await userHelper.getUser(tokenData.id);
+        const decoratedUser = decorator.decorateUser(user);
 
-        if(user){
-            res.status(200).json({ user: user });
+        if(decoratedUser){
+            res.status(200).json({ user: decoratedUser });
         } else {
             res.json({ message: 'No user found' });
         }
     } else {
-        res.json({message: 'No token provided'});
+        res.status(401).json({message: 'No token provided'});
     }
 }
 

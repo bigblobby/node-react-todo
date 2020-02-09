@@ -3,10 +3,7 @@ const controller = require('../controllers/todo.controller');
 const logger = require('../middleware/todo.middleware').logger;
 var cache = require('../middleware/flatcache');
 
-
-// Router specific middleware
-//router.use(logger);
-
+// TODO cache needs to be cleared when a todo it created or updated
 router.route('/')
     .get(cache('todos', 30), controller.getAll)
     .post(controller.createOne);

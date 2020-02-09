@@ -24,6 +24,10 @@ const User = db.define('user', {
     lastName: {
         type: Sequelize.STRING,
         allowNull: true,
+    },
+    roles: {
+        type: Sequelize.STRING,
+        defaultValue: '["ROLE_USER"]'
     }
 }, {
     modelName: 'user',

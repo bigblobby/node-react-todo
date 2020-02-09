@@ -24,7 +24,7 @@ GET http://{{host}}/api/todo?page=1&limit=20&order=a-z
 
 ###
 
-GET http://{{host}}/api/todo/6
+GET http://{{host}}/api/todo/49
 
 ###
 
@@ -101,14 +101,14 @@ POST http://{{host}}/api/user/login
 Content-Type: application/json
 
 {
-    "username": "test",
+    "username": "tom",
     "password": "test"
 }
 
 ###
 
 GET http://{{host}}/protected
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjAsImlhdCI6MTU4MDY4MTQ0NywiZXhwIjoxNTgwNzY3ODQ3fQ.r87Nhp64PFnBWUowLjhT1APuLF9x6aJyxCS7kPc6Ejo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTgxMTk0NDIxLCJleHAiOjE1ODEyODA4MjF9.xV2Pp-L-TkIs5JRSq-LskzGAeAHeqNffFbm5kFycyso
 
 ###
 
@@ -125,7 +125,7 @@ POST http://{{host}}/api/user/verify-token
 Content-Type: application/json
 
 {
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNTgxMTgyMDY4LCJleHAiOjE1ODEyNjg0Njh9.2VngeJk23eTEnG6m0E3LX0ar-LR5eqNL3_DGwAtVR_g"
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTgxMTk0NDIxLCJleHAiOjE1ODEyODA4MjF9.xV2Pp-L-TkIs5JRSq-LskzGAeAHeqNffFbm5kFycyso"
 }
 
 ###

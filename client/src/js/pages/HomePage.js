@@ -1,9 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Tabs from "../components/Tabs/Tabs";
 import { articleSearch } from "../api";
+import { login, logout } from "../actions/userActions";
 
-export default class HomePage extends React.Component {
-
+class HomePage extends React.Component {
     constructor(props) {
         super(props);
 
@@ -40,9 +41,11 @@ export default class HomePage extends React.Component {
         return (
             <div>
                 <div className="search">
+                    <button onClick={ this.props.login }>Login</button>
+                    <button onClick={ this.props.logout }>Logout</button>
                     <input
                         type="text"
-                        value={this.state.query}
+                        value={ this.state.query }
                         onFocus={ this.handleFocus }
                         onBlur={ this.handleBlur }
                         onChange={ this.handleChange }
@@ -50,7 +53,7 @@ export default class HomePage extends React.Component {
                     <div className="results">
                         {
                             results.length > 0 && searchOpen && results.map(item => {
-                                return <div key={item.id}>{ item.name }</div>
+                                return <div key={ item.id }>{ item.name }</div>
                             })
                         }
                     </div>
@@ -69,3 +72,12 @@ export default class HomePage extends React.Component {
         );
     }
 }
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        login: () => dispatch(login()),
+        logout: () => dispatch(logout())
+    };
+};
+
+export default connect(null, mapDispatchToProps)(HomePage);

@@ -44,7 +44,10 @@ async function login(req, res){
 }
 
 async function verifyUser(req, res){
-    const token = req.body.token;
+    if(!req.headers.authorization) {
+        return res.status(401).json({message: 'No token provided'});
+    }
+    const [prefix, token] = req.headers.authorization.split(' ');
 
     if(token){
         try {

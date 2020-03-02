@@ -37,16 +37,16 @@ class Api {
 
     login(params){
         const url = '/api/user/login';
-        return axios.post(url, params, {
-            headers: {
-                Authorization: 'Bearer ' + 'token'
-            }
-        });
+        return axios.post(url, params);
     }
 
     verifyAndGetUser(params){
         const url = '/api/user/verify-token';
-        return axios.post(url, params);
+        return axios.post(url, params, {
+            headers: {
+                Authorization: 'Bearer ' + params.token
+            }
+        });
     }
 
     articleSearch(params){

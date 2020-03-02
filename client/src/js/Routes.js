@@ -37,7 +37,7 @@ export default class Routes extends React.Component {
                     <div id="content">
                         <Switch>
                             <Route exact path="/" render={ (props) => <HomePage { ...props } /> }/>
-                            <Route exact path="/admin" component={ AdminPage }/>
+                            {/*<Route exact path="/admin" component={ AdminPage }/>*/}
                             <Route exact path="/register" component={ RegisterPage }/>
                             <Route exact path="/login" component={ LoginPage }/>
                             <Route exact path="/account" component={ AccountPage }/>

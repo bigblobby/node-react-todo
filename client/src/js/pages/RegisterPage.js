@@ -1,5 +1,6 @@
+// TODO refactor
 import React from 'react';
-import { register } from "../api";
+import Api from "../api";
 import queryString from "query-string";
 
 export default class RegisterPage extends React.Component {
@@ -32,7 +33,7 @@ export default class RegisterPage extends React.Component {
     handleSubmit(e){
         e.preventDefault();
 
-        register({
+        Api.register({
             username: this.state.username,
             email: this.state.email,
             password: this.state.password

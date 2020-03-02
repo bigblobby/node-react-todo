@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const controller = require('../controllers/todo.controller');
 const logger = require('../middleware/todo.middleware').logger;
-var cache = require('../middleware/flatcache');
+const cache = require('../middleware/flatcache');
 
 // TODO cache needs to be cleared when a todo it created or updated
 router.route('/')

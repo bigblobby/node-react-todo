@@ -2,7 +2,7 @@ import React from 'react';
 import queryString from 'query-string';
 import Pagination from "../components/Pagination/Pagination";
 import {Link} from "react-router-dom";
-import { deleteTodo, getDataAtUrl } from "../api";
+import Api from "../api";
 import TodoList from "../components/TodoList/TodoList";
 
 export default class TodoListPage extends React.Component{
@@ -41,7 +41,7 @@ export default class TodoListPage extends React.Component{
             order: this.state.order
         });
 
-        getDataAtUrl('/api/todo?' + qs)
+        Api.getDataAtUrl('/api/todo?' + qs)
             .then(result => {
                 this.setState({
                     todos: result.data.items,
@@ -61,7 +61,7 @@ export default class TodoListPage extends React.Component{
     }
 
     handleYes(id){
-        deleteTodo(id).then(() => {
+        Api.deleteTodo(id).then(() => {
             this.setState({
                 modalId: null
             }, this.getTodos)

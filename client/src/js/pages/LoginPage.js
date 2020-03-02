@@ -1,15 +1,15 @@
 import React from 'react';
-import { login } from "../api";
-import Auth from "../utils/auth";
+import StorageService from "../StorageService";
+import { login } from "../actions/userActions";
+import { connect } from "react-redux";
 
-export default class LoginPage extends React.Component {
+class LoginPage extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
             username: '',
-            password: '',
-            error: null,
+            password: ''
         };
 
         this.handleInput = this.handleInput.bind(this);
@@ -17,10 +17,8 @@ export default class LoginPage extends React.Component {
     }
 
     componentDidMount(){
-        // Check if user is already logged in, if so redirect to homepage
-        const tokenExists = Auth.checkTokenExists();
-        if(tokenExists){
-            this.props.history.push("/account");
+        if(StorageService.getToken()){
+            this.props.history.push("/");
         }
     }
 
@@ -31,19 +29,9 @@ export default class LoginPage extends React.Component {
     handleSubmit(e){
         e.preventDefault();
 
-        login({
+        this.props.login({
             username: this.state.username,
             password: this.state.password
-        }).then(result => {
-            // Redirect to previous page after successful login
-            Auth.updateStorage();
-            if(result.data.token){
-                this.props.history.goBack();
-            }
-        }).catch(err => {
-            this.setState({
-                error: err.response.data.message
-            })
         });
     }
 
@@ -60,8 +48,8 @@ export default class LoginPage extends React.Component {
                         <input id="register-password" type="password" name="password" onChange={this.handleInput}/>
                     </div>
                     {
-                        this.state.error ? (
-                            <p style={{color: 'red'}}>{this.state.error}</p>
+                        this.props.error ? (
+                            <p style={{color: 'red'}}>{this.props.error}</p>
                         ) : null
                     }
                     <div>
@@ -72,3 +60,18 @@ export default class LoginPage extends React.Component {
         )
     }
 }
+
+const mapStateToProps = ({ auth }) => {
+    const { error } = auth;
+    return {
+        error: error
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        login: (params) => dispatch(login(params))
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

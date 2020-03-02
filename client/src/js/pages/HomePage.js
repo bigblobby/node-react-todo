@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Tabs from "../components/Tabs/Tabs";
-import { articleSearch } from "../api";
-import { login, logout } from "../actions/userActions";
+import Api from "../api";
 
 class HomePage extends React.Component {
     constructor(props) {
@@ -26,7 +25,7 @@ class HomePage extends React.Component {
 
     doSearch = () => {
         if(this.state.query.length > 2) {
-            articleSearch({ query: this.state.query })
+            Api.articleSearch({ query: this.state.query })
                 .then(results => {
                     this.setState({ results: results.data.result });
                 });
@@ -41,8 +40,6 @@ class HomePage extends React.Component {
         return (
             <div>
                 <div className="search">
-                    <button onClick={ this.props.login }>Login</button>
-                    <button onClick={ this.props.logout }>Logout</button>
                     <input
                         type="text"
                         value={ this.state.query }
@@ -73,11 +70,4 @@ class HomePage extends React.Component {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        login: () => dispatch(login()),
-        logout: () => dispatch(logout())
-    };
-};
-
-export default connect(null, mapDispatchToProps)(HomePage);
+export default connect(null, null)(HomePage);

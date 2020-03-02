@@ -1,51 +1,58 @@
 import axios from 'axios';
 
-const cache = {};
+class Api {
+    cache = {};
 
-function getCached(key, fallback){
-    if(cache[key] !== undefined) return cache[key];
-    cache[key] = fallback();
-    return cache[key];
+    getCached(key, fallback){
+        if(this.cache[key] !== undefined) return this.cache[key];
+        this.cache[key] = fallback();
+        return this.cache[key];
+    }
+
+    getDataAtUrl(url, cacheResults = false){
+        if(!cacheResults) return axios.get(url);
+
+        return this.getCached(url, () => {
+            return axios.get(url)
+        });
+    }
+
+    getProducts(params){
+        let url = '/api/product?set=' + params.set + '&limit=15';
+
+        return this.getCached(url, () => {
+            return axios.get(url);
+        });
+    }
+
+    deleteTodo(id){
+        console.log(id);
+        return axios.delete('/api/todo/' + id);
+    }
+
+    register(params){
+        const url = '/api/user/register';
+        return axios.post(url, params);
+    }
+
+    login(params){
+        const url = '/api/user/login';
+        return axios.post(url, params, {
+            headers: {
+                Authorization: 'Bearer ' + 'token'
+            }
+        });
+    }
+
+    verifyAndGetUser(params){
+        const url = '/api/user/verify-token';
+        return axios.post(url, params);
+    }
+
+    articleSearch(params){
+        const url = '/api/product/search';
+        return axios.post(url, params);
+    }
 }
 
-export function getDataAtUrl(url, cacheResults = false){
-    if(!cacheResults) return axios.get(url);
-
-    return getCached(url, () => {
-        return axios.get(url)
-    });
-}
-
-export function getProducts(params){
-    let url = '/api/product?set=' + params.set + '&limit=15';
-
-    return getCached(url, () => {
-        return axios.get(url);
-    });
-}
-
-export function deleteTodo(id){
-    console.log(id);
-    return axios.delete('/api/todo/' + id);
-}
-
-export function register(params){
-    const url = '/api/user/register';
-    return axios.post(url, params);
-}
-
-export function login(params){
-    const url = '/api/user/login';
-    return axios.post(url, params);
-}
-
-export function verifyAndGetUser(params){
-    const url = '/api/user/verify-token';
-    return axios.post(url, params);
-}
-
-export function articleSearch(params){
-    const url = '/api/product/search';
-    return axios.post(url, params);
-}
-
+export default new Api();

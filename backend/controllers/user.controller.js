@@ -9,8 +9,7 @@ function register(req, res, next){
         .then(user => {
             if(user){
                 let token = userHelper.newToken(user);
-                res.cookie('token', token, {maxAge: Number(process.env.JWT_EXPIRE) * 1000});
-                res.json({ message: 'account created successfully' })
+                res.json({ message: 'account created successfully', token: token })
             }
         }).catch(err => {
             console.log(err);
@@ -37,7 +36,6 @@ async function login(req, res){
 
         if (match) {
             let token = userHelper.newToken(user);
-            res.cookie('token', token, {maxAge: Number(process.env.JWT_EXPIRE) * 1000});
             res.status(201).json({ message: 'ok', token: token });
         } else {
             res.status(401).json({ message: 'Password is incorrect' });
@@ -47,15 +45,20 @@ async function login(req, res){
 
 async function verifyUser(req, res){
     const token = req.body.token;
-    if(token){
-        const tokenData = await userHelper.verifyToken(token);
-        const user = await userHelper.getUser(tokenData.id);
-        const decoratedUser = decorator.decorateUser(user);
 
-        if(decoratedUser){
-            res.status(200).json({ user: decoratedUser });
-        } else {
-            res.json({ message: 'No user found' });
+    if(token){
+        try {
+            const tokenData = await userHelper.verifyToken(token);
+            const user = await userHelper.getUser(tokenData.id);
+            const decoratedUser = decorator.decorateUser(user);
+
+            if(decoratedUser){
+                res.status(200).json({ user: decoratedUser });
+            } else {
+                res.json({ message: 'No user found' });
+            }
+        } catch(e) {
+            res.status(401).json({message: 'Token expired'});
         }
     } else {
         res.status(401).json({message: 'No token provided'});

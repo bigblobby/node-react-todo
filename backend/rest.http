@@ -101,8 +101,8 @@ POST http://{{host}}/api/user/login
 Content-Type: application/json
 
 {
-    "username": "tom",
-    "password": "test"
+    "username": "test",
+    "password": "t"
 }
 
 ###
@@ -126,6 +126,15 @@ Content-Type: application/json
 
 {
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTgxMTk0NDIxLCJleHAiOjE1ODEyODA4MjF9.xV2Pp-L-TkIs5JRSq-LskzGAeAHeqNffFbm5kFycyso"
+}
+
+###
+
+POST http://{{host}}/api/product/search
+Content-Type: application/json
+
+{
+    "query": "tes"
 }
 
 ###

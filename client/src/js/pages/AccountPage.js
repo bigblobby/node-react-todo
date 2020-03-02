@@ -1,65 +1,67 @@
 import React, {Fragment} from 'react';
-import Auth from '../utils/auth';
+import { connect } from "react-redux";
+import { logout, verifyToken } from "../actions/userActions";
 
-export default class AccountPage extends React.Component {
+class AccountPage extends React.Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            user: null
-        };
-
-        this.logout = this.logout.bind(this);
     }
-
 
     componentDidMount(){
-        const tokenExists = Auth.checkTokenExists();
-
-        if(tokenExists){
-            Auth.verifyTokenAndGetUser()
-                .then(result => {
-                    this.setState({
-                        user: result.data.user
-                    });
-                }).catch(err => {
-                    this.props.history.push("/login");
-                    console.dir(err);
-                });
-        } else {
-            this.props.history.push("/login");
-        }
-    }
-
-    logout(){
-        Auth.clearToken();
+        this.props.verify();
     }
 
     render(){
         return(
-            <Fragment>
-                <div>
-                    {
-                        this.state.user && this.state.user.id && (
-                            <p>ID: {this.state.user.id}</p>
-                        )
-                    }
-                    {
-                        this.state.user && this.state.user.email && (
-                            <p>Email: {this.state.user.email}</p>
-                        )
-                    }
-                    {
-                        this.state.user && this.state.user.username && (
-                            <p>Username: {this.state.user.username}</p>
-                        )
-                    }
-                </div>
-                <div>
-                    <button onClick={this.logout}>Logout</button>
-                </div>
-            </Fragment>
+            <div>
+                {
+                    this.props.isAuthenticated ? (
+                        <Fragment>
+                            <div>
+                                {
+                                    this.props.currentUser && this.props.currentUser.id && (
+                                        <p>ID: {this.props.currentUser.id}</p>
+                                    )
+                                }
+                                {
+                                    this.props.currentUser && this.props.currentUser.email && (
+                                        <p>Email: {this.props.currentUser.email}</p>
+                                    )
+                                }
+                                {
+                                    this.props.currentUser && this.props.currentUser.username && (
+                                        <p>Username: {this.props.currentUser.username}</p>
+                                    )
+                                }
+                            </div>
+                            <div>
+                                <button onClick={this.props.logout}>Logout</button>
+                            </div>
+                        </Fragment>
+                    ) : (
+                        <div>Not authorised</div>
+                    )
+                }
+            </div>
         );
     }
 }
+
+const mapStateToProps = ({auth}) => {
+    const { isAuthenticated, isFailure, currentUser } = auth;
+    return {
+        isAuthenticated,
+        isFailure,
+        currentUser
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        verify: () => dispatch(verifyToken()),
+        logout: () => dispatch(logout())
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AccountPage);
 

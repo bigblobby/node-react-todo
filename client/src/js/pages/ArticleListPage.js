@@ -1,7 +1,7 @@
 import React from 'react';
 import queryString from 'query-string';
 import Pagination from "../components/Pagination/Pagination";
-import { getDataAtUrl } from "../api";
+import Api from "../api";
 import ArticleList from "../components/ArticleList";
 import { Link } from "react-router-dom";
 
@@ -30,7 +30,7 @@ export default class ArticleListPage extends React.Component{
     getArticles(){
         const qs = queryString.stringify({ page: this.state.page });
 
-        getDataAtUrl('/api/article?' + qs, true)
+        Api.getDataAtUrl('/api/article?' + qs, true)
             .then(result => {
                 this.setState({
                     articles: result.data.items,

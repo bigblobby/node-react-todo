@@ -1,5 +1,5 @@
 import React from 'react';
-import { getProducts } from "../api";
+import Api from "../api";
 import { Link } from "react-router-dom";
 
 export default class ProductListPage extends React.Component {
@@ -45,7 +45,7 @@ export default class ProductListPage extends React.Component {
 
     fetchProducts(){
         this.setState({loading: true}, () => {
-            getProducts({set: this.state.set})
+            Api.getProducts({set: this.state.set})
                 .then(results => {
                     this.setState(prevState => ({
                         products: [

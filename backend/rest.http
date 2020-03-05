@@ -102,7 +102,7 @@ Content-Type: application/json
 
 {
     "username": "test",
-    "password": "t"
+    "password": "test"
 }
 
 ###
@@ -122,11 +122,7 @@ Content-Type: application/json
 ###
 
 POST http://{{host}}/api/user/verify-token
-Content-Type: application/json
-
-{
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTgxMTk0NDIxLCJleHAiOjE1ODEyODA4MjF9.xV2Pp-L-TkIs5JRSq-LskzGAeAHeqNffFbm5kFycyso"
-}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZXMiOiJbXCJST0xFX1VTRVJcIl0iLCJpYXQiOjE1ODM0NDQ4NzgsImV4cCI6MTU4MzUzMTI3OH0.lHdQEpgiHs2gzZ5giu4bMW1UYTUuWfIbJopLhyOVXkk
 
 ###
 

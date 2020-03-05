@@ -6,8 +6,8 @@ function decorateUser(user){
     decoratedUser.email = user.email;
     decoratedUser.roles = user.roles;
 
-    if(user.firstName) decoratedUser.firstName;
-    if(user.lastName) decoratedUser.lastName;
+    if(user.firstName) decoratedUser.firstName = user.firstName;
+    if(user.lastName) decoratedUser.lastName = user.lastName;
 
     return decoratedUser;
 }

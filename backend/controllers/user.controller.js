@@ -53,7 +53,7 @@ async function verifyUser(req, res){
         try {
             const tokenData = await userHelper.verifyToken(token);
             const user = await userHelper.getUser(tokenData.id);
-            const decoratedUser = decorator.decorateUser(user);
+            const decoratedUser = await decorator.decorateUser(user);
 
             if(decoratedUser){
                 res.status(200).json({ user: decoratedUser });

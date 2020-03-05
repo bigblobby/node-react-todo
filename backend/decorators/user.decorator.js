@@ -4,7 +4,7 @@ function decorateUser(user){
     decoratedUser.id = user.id;
     decoratedUser.username = user.username;
     decoratedUser.email = user.email;
-    //decoratedUser.roles = user.roles;
+    decoratedUser.roles = user.roles;
 
     if(user.firstName) decoratedUser.firstName;
     if(user.lastName) decoratedUser.lastName;

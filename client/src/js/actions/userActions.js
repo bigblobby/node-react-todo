@@ -6,6 +6,10 @@ import Api from "../api";
  *
  */
 
+const loginAdmin = () => ({
+    type: 'AUTH_ADMIN'
+});
+
 const loginSuccess = () => ({
     type: 'AUTH_SUCCESS',
 });
@@ -71,6 +75,9 @@ export const verifyToken = () => {
                 user: user.data.user
             }));
             dispatch(loginSuccess());
+            if(user.data.user.roles.includes("ROLE_ADMIN")){
+                dispatch(loginAdmin());
+            }
         } catch(e) {
             console.error(e.message);
             StorageService.removeToken();

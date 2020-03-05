@@ -1,4 +1,5 @@
 const initialState = {
+    isAdmin: false,
     isAuthenticated: false,
     isFailure: false,
     isLoading: false,
@@ -8,19 +9,29 @@ const initialState = {
 
 function authReducer(state = initialState, action){
     switch(action.type){
+        case "AUTH_ADMIN":
+            return {
+                ...state,
+                error: null,
+                isFailure: false,
+                isAuthenticated: true,
+                isAdmin: true
+            };
         case "AUTH_SUCCESS":
             return {
                 ...state,
                 error: null,
                 isFailure: false,
-                isAuthenticated: true
+                isAuthenticated: true,
+                isAdmin: false
             };
         case "AUTH_FAILURE":
             return {
                 ...state,
                 error: action.data.error,
                 isFailure: true,
-                isAuthenticated: false
+                isAuthenticated: false,
+                isAdmin: false
             };
         case 'AUTH_LOGOUT':
             return {
@@ -30,6 +41,7 @@ function authReducer(state = initialState, action){
                 isFailure: false,
                 isLoading: false,
                 currentUser: null,
+                isAdmin: false
             };
         case 'AUTH_REQUEST_PROFILE': //request user profile
             return {
@@ -38,6 +50,7 @@ function authReducer(state = initialState, action){
                 isFailure: false,
                 isLoading: true,
                 currentUser: null,
+                isAdmin: false
             };
         case 'AUTH_RECEIVE_PROFILE': //receive user profile
             return {
@@ -45,7 +58,8 @@ function authReducer(state = initialState, action){
                 error: null,
                 isLoading: false,
                 isFailure: false,
-                currentUser: action.data.user
+                currentUser: action.data.user,
+                isAdmin: false
             };
         default:
             return state;

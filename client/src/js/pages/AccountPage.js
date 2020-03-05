@@ -3,10 +3,6 @@ import { connect } from "react-redux";
 import { logout, verifyToken } from "../actions/userActions";
 
 class AccountPage extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     componentDidMount(){
         this.props.verify();
     }

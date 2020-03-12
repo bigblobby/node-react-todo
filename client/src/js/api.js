@@ -53,6 +53,11 @@ class Api {
         const url = '/api/product/search';
         return axios.post(url, params);
     }
+
+    contactEnquiry(params){
+        const url = '/api/enquiry/contact-us';
+        return axios.post(url, params);
+    }
 }
 
 export default new Api();

@@ -11,6 +11,7 @@ import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import AccountPage from "./pages/AccountPage";
 import AdminPage from "./pages/AdminPage";
+import ContactUsPage from "./pages/ContactUsPage";
 
 import rootReducer from "./reducers";
 
@@ -42,6 +43,7 @@ export default class Routes extends React.Component {
                             <Route exact path="/login" component={ LoginPage }/>
                             <Route exact path="/account" component={ AccountPage }/>
                             <Route exact path="/todo" component={ TodoListPage }/>
+                            <Route exact path="/contact-us" component={ ContactUsPage }/>
                             <Route path="/todo/create" component={ TodoCreate }/>
                             <Route path="/todo/:id" component={ TodoEdit }/>
                             <Route path="/article" component={ ArticleListPage }/>

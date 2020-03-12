@@ -16,27 +16,27 @@ const ContactEnquiry = db.define('contact_enquiry', {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
+            isEmail: {
+                args: true,
+                msg: 'This is not a valid email'
+            },
             notEmpty: {
                 args: true,
                 msg: 'You must fill in this field'
             },
-            isEmail: {
-                args: true,
-                msg: 'This is not a valid email'
-            }
         }
     },
     telephone: {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-            notEmpty: {
-                args: true,
-                msg: 'You must fill in this field'
-            },
             isNumeric: {
                 args: true,
                 msg: 'This is not a valid phone number'
+            },
+            notEmpty: {
+                args: true,
+                msg: 'You must fill in this field'
             }
         }
     },

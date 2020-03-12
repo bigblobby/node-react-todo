@@ -135,4 +135,15 @@ Content-Type: application/json
 
 ###
 
+POST http://{{host}}/api/enquiry/contact-us
+Content-Type: application/json
+
+{
+    "fullName" : "",
+    "email": "tom",
+    "telephone": "",
+    "agreeTerms": false
+}
+
+###
 

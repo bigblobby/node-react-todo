@@ -19,7 +19,7 @@ const Article = db.define('article', {
         allowNull: false,
     }
 }, {
-    modelName: 'todo',
+    modelName: 'article',
     paranoid: true
 });
 

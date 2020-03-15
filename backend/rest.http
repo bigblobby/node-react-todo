@@ -147,3 +147,26 @@ Content-Type: application/json
 
 ###
 
+POST http://{{host}}/api/application-enquiry/step-one
+Content-Type: application/json
+
+{
+    "fullName" : "Tom",
+    "email": "tom@test.com",
+    "telephone": "789"
+}
+
+###
+
+POST http://{{host}}/api/application-enquiry/step-two
+Content-Type: application/json
+
+{
+    "id": "5ee5f9f0-66e7-11ea-8f57-932b46d548d6",
+    "income": 1000,
+    "expenses": 100,
+    "agreeTerms": true
+}
+
+###
+

@@ -17,6 +17,7 @@ import rootReducer from "./reducers";
 
 import { createStore, applyMiddleware, compose } from "redux";
 import { Provider } from 'react-redux';
+import ApplicationForm from "./pages/ApplicationForm";
 
 const middleware = [
     thunk
@@ -44,6 +45,7 @@ export default class Routes extends React.Component {
                             <Route exact path="/account" component={ AccountPage }/>
                             <Route exact path="/todo" component={ TodoListPage }/>
                             <Route exact path="/contact-us" component={ ContactUsPage }/>
+                            <Route exact path="/application-form" component={ ApplicationForm }/>
                             <Route path="/todo/create" component={ TodoCreate }/>
                             <Route path="/todo/:id" component={ TodoEdit }/>
                             <Route path="/article" component={ ArticleListPage }/>

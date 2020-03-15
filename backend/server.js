@@ -16,6 +16,7 @@ const articleRouter = require('./routers/article.router');
 const productRouter = require('./routers/product.router');
 const userRouter = require('./routers/user.router');
 const enquiryRouter = require('./routers/forms/enquiry.router');
+const applicationEnquiryRouter = require('./routers/forms/application.router');
 
 app.disable('x-powered-by');
 app.disable('X-Powered-By');
@@ -34,6 +35,7 @@ app.use('/api/todo', todoRouter);
 app.use('/api/article', articleRouter);
 app.use('/api/product', productRouter);
 app.use('/api/enquiry', enquiryRouter);
+app.use('/api/application-enquiry', applicationEnquiryRouter);
 
 // Test authentication
 app.get('/protected', passport.authenticate('jwt', { session: false }), function(req, res) {

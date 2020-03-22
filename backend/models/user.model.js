@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../db');
 const bcrypt = require('bcrypt');
+const Media = require('./media.model');
 
 const User = db.define('user', {
     username: {
@@ -57,6 +58,7 @@ User.prototype.checkPassword = async function(password){
     });
 };
 
+User.belongsTo(Media, {as: 'media'});
 User.sync();
 
 module.exports = User;

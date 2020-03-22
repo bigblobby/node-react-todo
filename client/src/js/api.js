@@ -58,6 +58,11 @@ class Api {
         const url = '/api/enquiry/contact-us';
         return axios.post(url, params);
     }
+
+    uploadAvatar(params){
+        const url = '/api/user/upload-avatar';
+        return axios.put(url, params);
+    }
 }
 
 export default new Api();

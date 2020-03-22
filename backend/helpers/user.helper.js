@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const passportJWT = require('passport-jwt');
 const User = require('../models/user.model');
+const Media = require('../models/media.model');
 
 let ExtractJwt = passportJWT.ExtractJwt;
 let JwtStrategy = passportJWT.Strategy;
@@ -37,7 +38,8 @@ function verifyToken(token){
 function getUser(id){
     return new Promise((resolve, reject) => {
         User.findOne({
-            where: {id: id}
+            where: {id: id},
+            include: [ { model : Media, as : 'media' } ]
         }).then(result => {
             resolve(result);
         }).catch(err => {

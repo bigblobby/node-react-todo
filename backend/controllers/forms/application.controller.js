@@ -38,6 +38,8 @@ function stepOne(req, res){
             }).then(item => {
                 res.status(200).json({
                     success: true,
+                    completed: false,
+                    currentStep: 1,
                     nextStep: 2,
                     id: item.securityId
                 });
@@ -89,7 +91,6 @@ function stepTwo(req, res){
             },
             returning: true
         }).then(enquiry => {
-            console.log(enquiry);
             if(enquiry[1]){
                 return ApplicationEnquiry.findOne({where: { securityId: id }});
             } else {
@@ -100,6 +101,7 @@ function stepTwo(req, res){
                 res.status(200).json({
                     success: true,
                     completed: true,
+                    currentStep: 2,
                     nextStep: null
                 });
             } else {

@@ -1,5 +1,6 @@
 backend/node_modules
 backend/build
+backend/uploads
 client/node_modules
 client/build
 .idea/*

@@ -85,3 +85,16 @@ export const verifyToken = () => {
         }
     }
 };
+
+export const updateUser = (user) => {
+    return async function(dispatch) {
+        if(!StorageService.getToken()) {
+            dispatch(logoutAction());
+            return;
+        }
+
+        dispatch(receiveProfile({
+            user: user
+        }));
+    }
+};

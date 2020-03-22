@@ -90,8 +90,8 @@ POST http://{{host}}/api/user/register
 Content-Type: application/json
 
 {
-    "username": "BigBlobby",
-    "password": "12345",
+    "username": "test",
+    "password": "test",
     "email": "test@example.com"
 }
 
@@ -166,6 +166,15 @@ Content-Type: application/json
     "income": 1000,
     "expenses": 100,
     "agreeTerms": true
+}
+
+###
+
+PUT http://{{host}}/api/user/upload-avatar
+Content-Type: application/json
+
+{
+    "id": 1
 }
 
 ###

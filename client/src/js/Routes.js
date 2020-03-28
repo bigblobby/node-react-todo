@@ -1,6 +1,7 @@
 import React from 'react';
 import thunk from 'redux-thunk';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
+import { routerMiddleware, ConnectedRouter } from 'connected-react-router'
 import TodoListPage from "./pages/TodoListPage";
 import TodoEdit from "./components/TodoEdit";
 import TodoCreate from "./components/TodoCreate";
@@ -14,17 +15,19 @@ import AdminPage from "./pages/AdminPage";
 import ContactUsPage from "./pages/ContactUsPage";
 
 import rootReducer from "./reducers";
+import history from "./history";
 
 import { createStore, applyMiddleware, compose } from "redux";
 import { Provider } from 'react-redux';
 import ApplicationForm from "./pages/ApplicationForm";
 
 const middleware = [
-    thunk
+    thunk,
+    routerMiddleware(history)
 ];
 
 const store = createStore(
-    rootReducer,
+    rootReducer(history),
     compose(
         applyMiddleware(...middleware),
         window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
@@ -34,8 +37,8 @@ const store = createStore(
 export default class Routes extends React.Component {
     render() {
         return (
-            <BrowserRouter>
-                <Provider store={ store }>
+            <Provider store={ store }>
+                <ConnectedRouter history={history}>
                     <div id="content">
                         <Switch>
                             <Route exact path="/" render={ (props) => <HomePage { ...props } /> }/>
@@ -52,8 +55,8 @@ export default class Routes extends React.Component {
                             <Route path="/product" component={ ProductListPage }/>
                         </Switch>
                     </div>
-                </Provider>
-            </BrowserRouter>
+                </ConnectedRouter>
+            </Provider>
         );
     }
 }

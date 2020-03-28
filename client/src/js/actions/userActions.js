@@ -1,5 +1,6 @@
 import StorageService from "../StorageService";
 import Api from "../api";
+import { push } from 'connected-react-router'
 
 /**
  * Action types
@@ -45,7 +46,7 @@ export const login = (params) => {
             const token = data.data.token;
             StorageService.setToken(token);
             dispatch(loginSuccess());
-            //dispatch(push('/'))
+            dispatch(push('/account'));
         } catch(e) {
             const error = e.response.data.message;
             console.error(error);
@@ -58,6 +59,7 @@ export const logout = () => {
     return function(dispatch) {
         StorageService.removeToken();
         dispatch(logoutAction());
+        dispatch(push('/'))
     }
 };
 

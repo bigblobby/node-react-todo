@@ -14,8 +14,6 @@ class AccountPage extends React.Component {
 
     componentDidMount(){
         this.props.verify();
-
-        console.log(process.env)
     }
 
     handleUpload = (e) => {

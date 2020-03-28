@@ -18,7 +18,7 @@ class LoginPage extends React.Component {
 
     componentDidMount(){
         if(StorageService.getToken()){
-            this.props.history.push("/");
+            this.props.history.push("/account");
         }
     }
 

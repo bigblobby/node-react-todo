@@ -79,7 +79,7 @@ function updateUser(req, res) {
 function uploadAvatar(req, res) {
     if(!req.file) {
         console.error('There was a problem with this image');
-        res.status(500).json({ error: 'Please try again' });
+        res.status(500).json({ error: 'Please choose a file' });
     } else {
         Media.create({
             originalFilename: req.file.originalname,

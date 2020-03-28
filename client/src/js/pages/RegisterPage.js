@@ -2,6 +2,7 @@
 import React from 'react';
 import Api from "../api";
 import queryString from "query-string";
+import StorageService from "../StorageService";
 
 export default class RegisterPage extends React.Component {
 
@@ -20,8 +21,7 @@ export default class RegisterPage extends React.Component {
 
     componentDidMount(){
         // Check if user is already logged in, if so redirect to homepage
-        let cookies = queryString.parse(document.cookie);
-        if('token' in cookies){
+        if(StorageService.getToken()){
             this.props.history.push("/account");
         }
     }

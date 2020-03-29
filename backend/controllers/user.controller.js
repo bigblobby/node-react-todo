@@ -2,8 +2,6 @@ const User = require('../models/user.model');
 const Media = require('../models/media.model');
 const decorator = require('../decorators/user.decorator');
 const userHelper = require('../helpers/user.helper');
-const fs = require('fs');
-const path = require('path');
 
 // Route controllers
 function register(req, res, next) {

@@ -10,4 +10,4 @@ function isObjectEmpty(obj){
 
 module.exports = {
     isObjectEmpty: isObjectEmpty
-}
+};

@@ -13,8 +13,15 @@ async function decorateUser(user, properties = {}){
     if(user.lastName) decoratedUser.lastName = user.lastName;
     if(user.media){
         try {
-            const location = path.join(__dirname, '../uploads/') + user.media.filename;
-            decoratedUser.avatar = await mediaHelper.dataEncode(location, user.media.mimetype);
+            const settings = {
+                filename: user.media.filename,
+                mimetype: user.media.mimetype,
+                height: 200,
+                width: 200,
+                quality: 90,
+                filterName: 'avatar'
+            };
+            decoratedUser.avatar = await mediaHelper.processImage(settings);
         } catch(e) {
             console.log(e);
         }

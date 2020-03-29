@@ -1,31 +1,6 @@
 const router = require('express').Router();
 const controller = require('../controllers/user.controller');
-const multer = require('multer');
-const uuid = require('uuid');
-// var upload = multer({dest: 'uploads/'});
-
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, './uploads');
-    },
-    filename: (req, file, cb) => {
-        cb(null, uuid.v4().toString() + "_" + file.originalname);
-    }
-});
-
-const fileFilter = (req, file, cb) => {
-    if (file.mimetype === "image/jpeg" || file.mimetype === "image/png" || file.mimetype === "image/gif") {
-        cb(null, true);
-    } else {
-        cb("File type is not allowed", false);
-    }
-};
-
-const upload = multer({
-    storage,
-    fileFilter,
-    limits: 1024 * 1024 * 5
-});
+const upload = require('../config/multer').upload;
 
 router.post('/register', controller.register);
 router.post('/login', controller.login);
